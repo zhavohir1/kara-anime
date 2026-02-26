@@ -3,99 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA — Anime Portali</title>
+    <title>KARA ANIME</title>
     <style>
-        :root { --bg: #050505; --accent: #ff0000; --card: #121212; --text: #ffffff; }
-        body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding-bottom: 50px; }
+        :root { --red: #ff0000; --bg: #0a0a0a; --card: #161616; }
+        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; }
         
         header { 
-            background: #000; padding: 15px 20px; border-bottom: 3px solid var(--accent);
-            display: flex; align-items: center; position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 20px; background: #000; border-bottom: 2px solid var(--red);
+            position: sticky; top: 0; z-index: 100;
         }
-        .logo { 
-            font-size: 32px; font-weight: 900; letter-spacing: 3px; 
-            border-left: 6px solid var(--accent); padding-left: 12px; line-height: 1;
-        }
+        .logo { font-size: 24px; font-weight: 900; border-left: 5px solid var(--red); padding-left: 10px; }
+        
+        /* PROFIL QISMI */
+        .profile { display: flex; align-items: center; gap: 8px; border: 1px solid #333; padding: 5px 10px; border-radius: 20px; }
+        .profile img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--red); }
+        .user-name { font-size: 13px; font-weight: bold; }
 
-        .container { padding: 20px; }
-        h2 { font-size: 16px; text-transform: uppercase; color: #888; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        .container { padding: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+        .card { background: var(--card); border-radius: 8px; overflow: hidden; border: 1px solid #222; }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-title { padding: 8px; font-size: 12px; text-align: center; height: 35px; overflow: hidden; }
 
-        .grid { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
-            gap: 15px; 
-        }
-
-        .anime-card { 
-            background: var(--card); border-radius: 10px; overflow: hidden; 
-            transition: 0.3s; cursor: pointer; border: 1px solid #222;
-        }
-        .anime-card:active { transform: scale(0.95); }
-        .anime-card img { width: 100%; height: 220px; object-fit: cover; }
-        .anime-card .title { padding: 10px; font-size: 13px; font-weight: bold; text-align: center; height: 40px; overflow: hidden; }
-
-        #player-modal {
-            display: none; position: fixed; top:0; left:0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98); z-index: 1000; flex-direction: column;
-        }
-        .player-wrapper { width: 100%; margin: auto 0; }
-        iframe { width: 100%; height: 250px; border: none; }
-        .close-btn { padding: 20px; color: var(--accent); font-weight: bold; text-align: right; cursor: pointer; }
+        #player { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:200; flex-direction:column; }
+        iframe { width:100%; height:250px; border:none; margin:auto 0; }
+        .close { padding:20px; text-align:right; color:var(--red); font-weight:bold; cursor:pointer; }
     </style>
 </head>
 <body>
 
-<header><div class="logo">KARA</div></header>
+<header>
+    <div class="logo">KARA</div>
+    <div class="profile">
+        <span class="user-name">Zhavohir</span>
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Zhavohir" alt="User">
+    </div>
+</header>
 
-<div id="player-modal">
-    <div class="close-btn" onclick="closePlayer()">YOPISH [X]</div>
-    <div class="player-wrapper" id="video-container"></div>
+<div id="player">
+    <div class="close" onclick="closeP()">YOPISH [X]</div>
+    <div id="v-cont"></div>
 </div>
 
 <div class="container">
-    <h2>SO'NGGI YANGILANISHLAR</h2>
-    <div class="grid" id="anime-list">Yuklanmoqda...</div>
+    <h3 style="color: #888; font-size: 14px; text-transform: uppercase;">Yangi animelar</h3>
+    <div class="grid" id="list">Yuklanmoqda...</div>
 </div>
 
 <script>
-    // Anilibria API manzili barqaror holatga keltirildi
-    const apiURL = 'https://api.anilibria.tv/v3/title/updates?limit=24';
+    // API manzili to'g'rilandi
+    const api = 'https://api.anilibria.tv/v3/title/updates?limit=24';
 
-    async function fetchAnime() {
+    async function load() {
         try {
-            const response = await fetch(apiURL);
-            const data = await response.json();
-            const list = document.getElementById('anime-list');
+            const res = await fetch(api);
+            const data = await res.json();
+            const list = document.getElementById('list');
             list.innerHTML = '';
-
-            data.list.forEach(anime => {
-                const card = document.createElement('div');
-                card.className = 'anime-card';
-                card.innerHTML = `
-                    <img src="https://www.anilibria.tv${anime.posters.medium.url}" alt="${anime.names.ru}">
-                    <div class="title">${anime.names.ru}</div>
+            
+            data.list.forEach(a => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+                    <img src="https://www.anilibria.tv${a.posters.medium.url}">
+                    <div class="card-title">${a.names.ru}</div>
                 `;
-                // Pleer qismi to'g'rilandi
-                card.onclick = () => openPlayer(anime.player.host, anime.player.list[Object.keys(anime.player.list)[0]].uuid);
-                list.appendChild(card);
+                div.onclick = () => {
+                    document.getElementById('player').style.display = 'flex';
+                    // Video pleer ulanmasi to'g'rilandi
+                    const host = a.player.host;
+                    const uuid = a.player.list[Object.keys(a.player.list)[0]].uuid;
+                    document.getElementById('v-cont').innerHTML = `<iframe src="https://${host}/public/embed.html?uuid=${uuid}" allowfullscreen></iframe>`;
+                };
+                list.appendChild(div);
             });
-        } catch (e) {
-            document.getElementById('anime-list').innerHTML = "<div style='color:red'>Xatolik yuz berdi. Sahifani yangilang.</div>";
+        } catch(e) { 
+            document.getElementById('list').innerHTML = '<div style="color:red">Server vaqtincha ishlamayapti. Sahifani yangilang.</div>'; 
         }
     }
 
-    function openPlayer(host, uuid) {
-        const modal = document.getElementById('player-modal');
-        const container = document.getElementById('video-container');
-        modal.style.display = 'flex';
-        container.innerHTML = `<iframe src="https://${host}/public/embed.html?uuid=${uuid}" allowfullscreen></iframe>`;
+    function closeP() { 
+        document.getElementById('player').style.display = 'none'; 
+        document.getElementById('v-cont').innerHTML = '';
     }
 
-    function closePlayer() {
-        document.getElementById('player-modal').style.display = 'none';
-        document.getElementById('video-container').innerHTML = '';
-    }
-
-    fetchAnime();
+    load();
 </script>
 
 </body>
