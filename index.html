@@ -3,61 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA ANIME</title>
+    <title>KARA ANIME — Profil & Portal</title>
     <style>
-        :root { --red: #ff0000; --bg: #0a0a0a; --card: #161616; }
-        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; }
+        :root { --red: #ff0000; --bg: #0a0a0a; --card: #161616; --text: #ffffff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding-bottom: 50px; }
         
+        /* Yuqori qism (Header) */
         header { 
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 20px; background: #000; border-bottom: 2px solid var(--red);
-            position: sticky; top: 0; z-index: 100;
+            padding: 12px 20px; background: #000; border-bottom: 2px solid var(--red);
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-        .logo { font-size: 24px; font-weight: 900; border-left: 5px solid var(--red); padding-left: 10px; }
+        .logo { font-size: 26px; font-weight: 900; letter-spacing: 2px; border-left: 5px solid var(--red); padding-left: 12px; }
         
-        /* PROFIL QISMI */
-        .profile { display: flex; align-items: center; gap: 8px; border: 1px solid #333; padding: 5px 10px; border-radius: 20px; }
-        .profile img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--red); }
-        .user-name { font-size: 13px; font-weight: bold; }
+        /* Profil dizayni */
+        .profile { display: flex; align-items: center; gap: 10px; background: #1a1a1a; padding: 5px 12px; border-radius: 25px; border: 1px solid #333; cursor: pointer; }
+        .profile:active { transform: scale(0.95); }
+        .profile img { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--red); object-fit: cover; }
+        .user-name { font-size: 14px; font-weight: 600; color: #eee; }
 
-        .container { padding: 15px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
-        .card { background: var(--card); border-radius: 8px; overflow: hidden; border: 1px solid #222; }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-title { padding: 8px; font-size: 12px; text-align: center; height: 35px; overflow: hidden; }
+        .container { padding: 20px; }
+        h3 { font-size: 14px; text-transform: uppercase; color: #888; letter-spacing: 1px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 8px; }
 
-        #player { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:200; flex-direction:column; }
-        iframe { width:100%; height:250px; border:none; margin:auto 0; }
-        .close { padding:20px; text-align:right; color:var(--red); font-weight:bold; cursor:pointer; }
+        /* Anime kartochkalari */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; }
+        .card { background: var(--card); border-radius: 12px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #222; position: relative; }
+        .card:hover { border-color: var(--red); transform: translateY(-5px); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-title { padding: 10px; font-size: 13px; font-weight: bold; text-align: center; height: 38px; display: flex; align-items: center; justify-content: center; line-height: 1.2; }
+
+        /* Video pleer oynasi */
+        #player { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:1000; flex-direction:column; }
+        .player-inner { width: 100%; margin: auto 0; }
+        iframe { width:100%; height:260px; border:none; box-shadow: 0 0 20px rgba(255,0,0,0.2); }
+        .close-btn { padding: 25px; color: var(--red); font-weight: bold; text-align: right; cursor: pointer; font-size: 18px; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo">KARA</div>
-    <div class="profile">
+    <div class="profile" onclick="alert('Salom, Zhavohir! Bu sizning shaxsiy profilingiz.')">
         <span class="user-name">Zhavohir</span>
-        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Zhavohir" alt="User">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Zhavohir" alt="Avatar">
     </div>
 </header>
 
 <div id="player">
-    <div class="close" onclick="closeP()">YOPISH [X]</div>
-    <div id="v-cont"></div>
+    <div class="close-btn" onclick="closeP()">YOPISH [X]</div>
+    <div class="player-inner" id="v-cont"></div>
 </div>
 
 <div class="container">
-    <h3 style="color: #888; font-size: 14px; text-transform: uppercase;">Yangi animelar</h3>
+    <h3>Yangi qo'shilganlar</h3>
     <div class="grid" id="list">Yuklanmoqda...</div>
 </div>
 
 <script>
-    // API manzili to'g'rilandi
-    const api = 'https://api.anilibria.tv/v3/title/updates?limit=24';
+    // 55-satr: API manzili eng barqaror holatga keltirildi
+    const api = 'https://api.anilibria.tv/v3/title/updates?limit=24&filter=id,names,posters,player';
 
     async function load() {
         try {
             const res = await fetch(api);
+            if (!res.ok) throw new Error("Server xatosi");
             const data = await res.json();
             const list = document.getElementById('list');
             list.innerHTML = '';
@@ -66,20 +75,25 @@
                 const div = document.createElement('div');
                 div.className = 'card';
                 div.innerHTML = `
-                    <img src="https://www.anilibria.tv${a.posters.medium.url}">
-                    <div class="card-title">${a.names.ru}</div>
+                    <img src="https://www.anilibria.tv${a.posters.medium.url}" loading="lazy">
+                    <div class="card-title">${a.names.ru || a.names.en}</div>
                 `;
                 div.onclick = () => {
                     document.getElementById('player').style.display = 'flex';
-                    // Video pleer ulanmasi to'g'rilandi
                     const host = a.player.host;
-                    const uuid = a.player.list[Object.keys(a.player.list)[0]].uuid;
-                    document.getElementById('v-cont').innerHTML = `<iframe src="https://${host}/public/embed.html?uuid=${uuid}" allowfullscreen></iframe>`;
+                    const episodes = Object.keys(a.player.list);
+                    const videoId = a.player.list[episodes[0]].uuid;
+                    document.getElementById('v-cont').innerHTML = `
+                        <iframe src="https://${host}/public/embed.html?uuid=${videoId}" allowfullscreen></iframe>
+                    `;
                 };
                 list.appendChild(div);
             });
         } catch(e) { 
-            document.getElementById('list').innerHTML = '<div style="color:red">Server vaqtincha ishlamayapti. Sahifani yangilang.</div>'; 
+            document.getElementById('list').innerHTML = `
+                <div style="color:red; text-align:center; grid-column: 1/-1; padding: 20px;">
+                    Anilibria serveri bilan bog'lanib bo'lmadi.<br>Iltimos, sahifani yangilang!
+                </div>`; 
         }
     }
 
