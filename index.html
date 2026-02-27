@@ -3,197 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA ANIME | Ultimate Entertainment</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Exo+2:wght@300;700&display=swap" rel="stylesheet">
+    <title>KARA ANIME | NEXT GEN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --red: #ff0000;
-            --dark-red: #8b0000;
-            --bg: #020202;
-            --neon-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.3);
-            --text-neon: 0 0 8px #ff0000, 0 0 15px #ff0000;
+            --dark: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+            --neon: 0 0 20px #ff0000, 0 0 40px rgba(255, 0, 0, 0.5);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
+            background: var(--dark);
             color: #fff;
-            font-family: 'Exo 2', sans-serif;
-            margin: 0;
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #110000 0%, #000 100%);
+            background: radial-gradient(circle at top right, #200000, #000);
         }
 
-        /* YUQORI ANIMATSIYALI HEADER */
+        /* ANIMATSIYALI FON */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.2; z-index: -1;
+        }
+
+        /* HEADER - CYBER STYLE */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 6%; background: rgba(0, 0, 0, 0.9);
-            border-bottom: 2px solid var(--red); position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
+            padding: 20px 8%; background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px); border-bottom: 2px solid var(--red);
+            position: sticky; top: 0; z-index: 1000; box-shadow: var(--neon);
         }
 
         .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px; font-weight: 900; letter-spacing: 5px;
-            color: #fff; text-decoration: none; text-shadow: var(--text-neon);
-            animation: pulse 2s infinite;
+            font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 6px; color: #fff; text-decoration: none;
+            text-shadow: 0 0 10px var(--red);
         }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        .logo span { color: var(--red); animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
 
-        .profile {
-            display: flex; align-items: center; gap: 12px;
-            padding: 5px 15px; border-radius: 50px;
-            border: 2px solid var(--red); background: #000;
-            box-shadow: var(--neon-shadow); transition: 0.3s;
-        }
-        .profile:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--red); }
-        .profile img { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
-
-        /* KUCHAYTIRILGAN QIDIRUV */
-        .search-area { padding: 30px 6% 10px; }
-        .search-box {
-            width: 100%; padding: 18px 25px; border-radius: 15px;
-            border: 2px solid #222; background: #0a0a0a; color: #fff;
-            font-size: 16px; outline: none; transition: 0.4s;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-        }
-        .search-box:focus { border-color: var(--red); box-shadow: var(--neon-shadow); width: 100%; }
-
-        .section-label {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px; margin: 40px 0 25px; color: #fff;
-            text-transform: uppercase; letter-spacing: 3px;
+        .profile-btn {
             display: flex; align-items: center; gap: 15px;
+            padding: 8px 20px; border-radius: 40px; background: var(--glass);
+            border: 1px solid var(--red); box-shadow: var(--neon);
+            transition: 0.4s; cursor: pointer;
         }
-        .section-label::after { content: ""; height: 2px; flex-grow: 1; background: linear-gradient(90deg, var(--red), transparent); }
+        .profile-btn:hover { background: var(--red); transform: scale(1.05); }
+        .profile-btn img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
 
-        /* KARTALAR DIZAYNI */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 25px; }
+        /* SEARCH AREA */
+        .hero { padding: 40px 8%; text-align: center; }
+        .search-container { position: relative; max-width: 800px; margin: 0 auto; }
+        .search-box {
+            width: 100%; padding: 20px 30px; border-radius: 50px;
+            background: rgba(255,255,255,0.07); border: 2px solid #333;
+            color: #fff; font-size: 18px; outline: none; transition: 0.4s;
+        }
+        .search-box:focus { border-color: var(--red); box-shadow: var(--neon); background: rgba(0,0,0,0.6); }
+
+        /* GRID & CARDS */
+        .container { padding: 0 8% 100px; }
+        .section-header {
+            font-family: 'Orbitron', sans-serif; font-size: 24px; margin: 50px 0 30px;
+            display: flex; align-items: center; gap: 20px; color: var(--red);
+        }
+        .section-header::after { content: ""; height: 2px; flex-grow: 1; background: linear-gradient(90deg, var(--red), transparent); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 30px; }
         .card {
-            background: #0f0f0f; border-radius: 15px; overflow: hidden;
-            border: 1px solid #1a1a1a; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; cursor: pointer;
+            background: var(--glass); border-radius: 20px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1); position: relative;
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer;
+            perspective: 1000px;
         }
-        .card:hover { transform: translateY(-12px) rotate(1deg); border-color: var(--red); box-shadow: var(--neon-shadow); }
-        .card img { width: 100%; height: 250px; object-fit: cover; filter: grayscale(20%); transition: 0.5s; }
-        .card:hover img { filter: grayscale(0%); scale: 1.1; }
-        .card-title { padding: 15px; text-align: center; font-weight: bold; font-size: 14px; background: rgba(0,0,0,0.8); }
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            border-color: var(--red); box-shadow: var(--neon);
+        }
+        .card img { width: 100%; height: 280px; object-fit: cover; transition: 0.5s; }
+        .card:hover img { transform: scale(1.1); filter: brightness(1.2); }
+        
+        .card-info {
+            padding: 15px; background: linear-gradient(to top, #000, transparent);
+            position: absolute; bottom: 0; width: 100%; text-align: center;
+        }
+        .card-title { font-weight: bold; font-size: 14px; text-shadow: 2px 2px 4px #000; }
 
-        /* QOZOG'ISTON UCHUN GIBRID PLEER MODAL */
-        #modal {
+        /* FULLSCREEN PLAYER */
+        #player-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; flex-direction: column;
+            background: #000; z-index: 10000; flex-direction: column;
         }
-        .m-top { padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--red); }
-        .p-selector { display: flex; gap: 10px; padding: 10px; background: #111; overflow-x: auto; }
-        .p-btn { 
-            background: #000; color: #fff; border: 1px solid var(--red); 
-            padding: 8px 15px; border-radius: 8px; white-space: nowrap; cursor: pointer;
-            font-size: 12px; font-weight: bold; transition: 0.3s;
+        .player-nav {
+            padding: 20px 5%; display: flex; justify-content: space-between;
+            background: #0a0a0a; border-bottom: 2px solid var(--red);
         }
-        .p-btn.active { background: var(--red); box-shadow: var(--neon-shadow); }
-
-        .video-content { flex-grow: 1; background: #000; }
+        .server-list { display: flex; gap: 10px; overflow-x: auto; padding: 10px 5%; background: #111; }
+        .srv-btn {
+            background: transparent; color: #fff; border: 1px solid var(--red);
+            padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+        .srv-btn.active { background: var(--red); box-shadow: var(--neon); }
+        .iframe-container { flex-grow: 1; position: relative; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        @media (max-width: 600px) {
-            .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-            .logo { font-size: 20px; }
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .logo { font-size: 22px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#" class="logo">KARA<span>ANIME</span></a>
-    <div class="profile">
-        <span style="text-shadow: 0 0 5px red;">Zhavohir</span>
-        <img src="https://i.pinimg.com/736x/8a/06/6d/8a066d5498305c6d32c510e972605f6a.jpg" alt="P">
+    <a href="#" class="logo">KARA <span>ANIME</span></a>
+    <div class="profile-btn">
+        <span style="font-weight: 900; letter-spacing: 1px;">ZHAVOHIR</span>
+        <img src="https://i.pinimg.com/736x/88/ef/37/88ef37240c345371f307c088f6110901.jpg" alt="Kara">
     </div>
 </header>
 
-<div class="search-area">
-    <input type="text" class="search-box" id="search" placeholder="Поиск (Например: Человек-бензопила)..." onkeyup="search()">
+<div class="hero">
+    <div class="search-container">
+        <input type="text" class="search-box" id="search" placeholder="Найди свою легенду..." onkeyup="handleSearch()">
+    </div>
 </div>
 
-<div class="container" style="padding: 0 6% 50px;">
-    <div class="section-label">🔥 В ТРЕНДЕ (KZ)</div>
-    <div class="grid" id="trending"></div>
+<div class="container">
+    <div class="section-header">💎 ВАШИ ПРИОРИТЕТЫ</div>
+    <div class="grid" id="favorites"></div>
 
-    <div class="section-label">⚔️ ЛЕГЕНДАРНЫЕ</div>
-    <div class="grid" id="shonen"></div>
+    <div class="section-header">🔥 МИРОВОЙ ТОП</div>
+    <div class="grid" id="global-top"></div>
 </div>
 
-<div id="modal">
-    <div class="m-top">
-        <div id="m-title" style="font-weight: 900; text-shadow: var(--text-neon);">LOADING...</div>
-        <div onclick="closeM()" style="color: var(--red); cursor: pointer; font-weight: 900;">[X] ЗАКРЫТЬ</div>
+<div id="player-overlay">
+    <div class="player-nav">
+        <div id="p-title" style="font-family: 'Orbitron'; color: var(--red);"></div>
+        <div onclick="closePlayer()" style="cursor: pointer; font-weight: 900; color: #fff;">ЗАКРЫТЬ [ESC]</div>
     </div>
-    <div class="p-selector">
-        <button class="p-btn active" onclick="setPlayer(1)">Сервер 1 (Kodik)</button>
-        <button class="p-btn" onclick="setPlayer(2)">Сервер 2 (Alloha)</button>
-        <button class="p-btn" onclick="setPlayer(3)">Сервер 3 (Vidsrc)</button>
-        <button class="p-btn" onclick="setPlayer(4)">Сервер 4 (UHD)</button>
+    <div class="server-list">
+        <button class="srv-btn active" onclick="changeSrv(1)">Server: Kodik (Main)</button>
+        <button class="srv-btn" onclick="changeSrv(2)">Server: Alloha (HD)</button>
+        <button class="srv-btn" onclick="changeSrv(3)">Server: VidSrc (Global)</button>
     </div>
-    <div class="video-content" id="v-box"></div>
+    <div class="iframe-container" id="video-box"></div>
 </div>
 
 <script>
-    const API = 'https://shikimori.one/api/animes';
-    let curTitle = "";
+    const SHIKI = 'https://shikimori.one/api/animes';
+    let currentTitle = "";
 
-    async function load(params, target) {
-        try {
-            const r = await fetch(`${API}?${params}`);
-            const data = await r.json();
-            const box = document.getElementById(target);
-            box.innerHTML = '';
-            data.forEach(a => {
-                const el = document.createElement('div');
-                el.className = 'card';
-                el.innerHTML = `<img src="https://shikimori.one${a.image.preview}"><div class="card-title">${a.russian || a.name}</div>`;
-                el.onclick = () => openM(a.russian || a.name);
-                box.appendChild(el);
-            });
-        } catch(e) {}
+    // Animatsiyali yuklanish
+    async function loadAnimes(query, boxId) {
+        const res = await fetch(`${SHIKI}?${query}`);
+        const data = await res.json();
+        const box = document.getElementById(boxId);
+        box.innerHTML = '';
+        data.forEach(a => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="https://shikimori.one${a.image.preview}">
+                <div class="card-info"><div class="card-title">${a.russian || a.name}</div></div>
+            `;
+            card.onclick = () => openPlayer(a.russian || a.name);
+            box.appendChild(card);
+        });
     }
 
-    function openM(t) {
-        curTitle = t;
-        document.getElementById('modal').style.display = 'flex';
-        document.getElementById('m-title').innerText = t;
-        setPlayer(1);
+    function openPlayer(title) {
+        currentTitle = title;
+        document.getElementById('player-overlay').style.display = 'flex';
+        document.getElementById('p-title').innerText = title.toUpperCase();
+        document.body.style.overflow = 'hidden';
+        changeSrv(1);
     }
 
-    function setPlayer(n) {
-        const box = document.getElementById('v-box');
-        const btns = document.querySelectorAll('.p-btn');
+    function changeSrv(n) {
+        const vb = document.getElementById('video-box');
+        const btns = document.querySelectorAll('.srv-btn');
         btns.forEach((b, i) => b.classList.toggle('active', i === n-1));
         
-        const q = encodeURIComponent(curTitle);
-        // HAR XIL MANBALAR - QOZOG'ISTONDA ISHLASH EHTIMOLI YUQORI BO'LGANLARI
-        if(n === 1) box.innerHTML = `<iframe src="https://base.karatun.com/search?title=${q}" allowfullscreen></iframe>`;
-        if(n === 2) box.innerHTML = `<iframe src="https://www.alloha.tv/video/search?q=${q}" allowfullscreen></iframe>`;
-        if(n === 3) box.innerHTML = `<iframe src="https://vidsrc.me/embed/anime?search=${q}" allowfullscreen></iframe>`;
-        if(n === 4) box.innerHTML = `<iframe src="https://vidsrc.cc/v2/embed/anime/search?q=${q}" allowfullscreen></iframe>`;
+        const q = encodeURIComponent(currentTitle);
+        if(n===1) vb.innerHTML = `<iframe src="https://base.karatun.com/search?title=${q}" allowfullscreen></iframe>`;
+        if(n===2) vb.innerHTML = `<iframe src="https://www.alloha.tv/video/search?q=${q}" allowfullscreen></iframe>`;
+        if(n===3) vb.innerHTML = `<iframe src="https://vidsrc.me/embed/anime?search=${q}" allowfullscreen></iframe>`;
     }
 
-    function closeM() {
-        document.getElementById('modal').style.display = 'none';
-        document.getElementById('v-box').innerHTML = '';
+    function closePlayer() {
+        document.getElementById('player-overlay').style.display = 'none';
+        document.getElementById('video-box').innerHTML = '';
+        document.body.style.overflow = 'auto';
     }
 
-    function search() {
-        const s = document.getElementById('search').value;
-        if(s.length > 2) load(`search=${s}&limit=24`, 'trending');
-        else if(s.length === 0) init();
+    function handleSearch() {
+        const val = document.getElementById('search').value;
+        if(val.length > 2) loadAnimes(`search=${val}&limit=24`, 'global-top');
+        else if(val.length === 0) init();
     }
 
     function init() {
-        load('order=popularity&limit=24&status=released', 'trending');
-        load('ids=51019,52299,617,37451,14813,38524,40052', 'shonen');
+        // Tanlangan animelar IDlari (Oshibosh, Solo Leveling, etc)
+        loadAnimes('ids=51019,52299,617,14813,37451,50528,38524', 'favorites');
+        loadAnimes('order=popularity&status=released&limit=30', 'global-top');
     }
 
     init();
