@@ -3,208 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA — Премиум Аниме Портал</title>
+    <title>KARA — Аниме Портал</title>
     <style>
-        :root {
-            --red: #ff0000;
-            --bg: #050505;
-            --card-bg: #121212;
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
+        :root { --red: #ff0000; --bg: #050505; --card: #121212; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 50px; }
+        
+        header { 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 5%; background: #000; border-bottom: 2px solid var(--red);
+            position: sticky; top: 0; z-index: 1000;
         }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: 2px; border-left: 4px solid var(--red); padding-left: 10px; }
+        
+        .profile { display: flex; align-items: center; gap: 10px; background: #1a1a1a; padding: 5px 15px; border-radius: 25px; border: 1px solid #333; }
+        .profile img { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--red); background: #222; }
+        .user-name { font-size: 14px; font-weight: bold; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding-bottom: 50px;
-        }
+        .container { padding: 20px 5%; }
+        .search-box { width: 100%; margin-bottom: 25px; }
+        .search-box input { width: 100%; padding: 12px 20px; border-radius: 10px; border: 1px solid #333; background: #111; color: white; outline: none; box-sizing: border-box; font-size: 16px; }
+        .search-box input:focus { border-color: var(--red); }
 
-        /* Шапка сайта */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 5%;
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 1px solid #222;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
+        h2 { font-size: 18px; text-transform: uppercase; color: #eee; border-left: 4px solid var(--red); padding-left: 12px; margin-bottom: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        
+        .card { background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid #222; cursor: pointer; transition: 0.3s; position: relative; }
+        .card:hover { border-color: var(--red); transform: translateY(-8px); box-shadow: 0 10px 20px rgba(255,0,0,0.1); }
+        .card img { width: 100%; height: 240px; object-fit: cover; }
+        .card-title { padding: 12px; font-size: 13px; text-align: center; height: 38px; overflow: hidden; display: flex; align-items: center; justify-content: center; line-height: 1.3; font-weight: 500; }
 
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
+        #player { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:2000; flex-direction:column; }
+        .close { padding: 25px; text-align: right; color: var(--red); font-weight: bold; cursor: pointer; font-size: 20px; }
+        .player-box { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        iframe { width: 95%; height: 85%; border: none; border-radius: 8px; background: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 
-        .logo span {
-            color: var(--red);
-            margin-right: 5px;
-        }
-
-        /* Поиск */
-        .search-box {
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 5px 15px;
-            display: flex;
-            align-items: center;
-            border: 1px solid #333;
-            width: 35%;
-        }
-
-        .search-box input {
-            background: none;
-            border: none;
-            color: white;
-            padding: 8px;
-            width: 100%;
-            outline: none;
-            font-size: 14px;
-        }
-
-        /* Стильный Аниме Профиль */
-        .profile-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(45deg, #111, #222);
-            padding: 6px 15px;
-            border-radius: 30px;
-            border: 1px solid #333;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .profile-container:hover {
-            border-color: var(--red);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-        }
-
-        /* Аниме Аватар */
-        .profile-container img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid var(--red);
-            object-fit: cover;
-        }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        /* Основной контент */
-        .main-content {
-            padding: 20px 5%;
-        }
-
-        h2 {
-            font-size: 18px;
-            text-transform: uppercase;
-            border-left: 4px solid var(--red);
-            padding-left: 15px;
-            margin-bottom: 25px;
-            color: var(--text-main);
-        }
-
-        /* Сетка Аниме */
-        .anime-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
-        }
-
-        .anime-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: 0.4s;
-            cursor: pointer;
-            border: 1px solid #1a1a1a;
-            position: relative;
-        }
-
-        .anime-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--red);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-
-        .anime-card img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-        }
-
-        .anime-card .info {
-            padding: 12px;
-            text-align: center;
-        }
-
-        .anime-card .title {
-            font-size: 13px;
-            font-weight: 600;
-            height: 34px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        /* Плеер */
-        #videoModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98);
-            z-index: 2000;
-            flex-direction: column;
-        }
-
-        .modal-header {
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #000;
-        }
-
-        .close-btn {
-            color: var(--red);
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .video-wrapper {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-        }
-
-        iframe {
-            width: 95%;
-            height: 90%;
-            border: none;
-            border-radius: 8px;
-            background: #000;
-        }
-
-        @media (max-width: 768px) {
-            .search-box { display: none; }
-            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
             iframe { height: 250px; }
         }
     </style>
@@ -212,100 +46,82 @@
 <body>
 
 <header>
-    <a href="#" class="logo"><span>|</span>KARA</a>
-    
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Поиск аниме..." onkeyup="searchAnime()">
-    </div>
-
-    <div class="profile-container" onclick="alert('Личный кабинет в разработке')">
+    <div class="logo">KARA</div>
+    <div class="profile">
         <span class="user-name">Zhavohir</span>
-        <img src="https://i.pinimg.com/736x/01/7c/44/017c44c9797092bc93da3d3873468533.jpg" alt="Avatar">
+        <img src="https://ui-avatars.com/api/?name=Zhavohir&background=ff0000&color=fff&rounded=true&bold=true" alt="Z">
     </div>
 </header>
 
-<div id="videoModal">
-    <div class="modal-header">
-        <div id="modalTitle" style="font-weight:bold; font-size: 14px;">Просмотр</div>
-        <span class="close-btn" onclick="closeVideo()">ЗАКРЫТЬ [X]</span>
-    </div>
-    <div class="video-wrapper" id="videoContainer"></div>
+<div id="player">
+    <div class="close" onclick="closeP()">ЗАКРЫТЬ [X]</div>
+    <div class="player-box" id="v-cont"></div>
 </div>
 
-<div class="main-content">
-    <h2 id="gridTitle">Последние обновления</h2>
-    <div class="anime-grid" id="animeList">
-        </div>
+<div class="container">
+    <div class="search-box">
+        <input type="text" id="q" placeholder="Поиск аниме (на русском)..." onkeyup="search()">
+    </div>
+    <h2 id="t">Популярное аниме</h2>
+    <div class="grid" id="list">Загрузка контента...</div>
 </div>
 
 <script>
-    // Server bilan bog'lanish yaxshilandi
-    const API_URL = 'https://api.anilibria.tv/v3/title/updates?limit=30&filter=id,names,posters,player';
-    let allAnime = [];
-
-    async function fetchAnime() {
-        const listContainer = document.getElementById('animeList');
-        listContainer.innerHTML = "<p style='padding:20px;'>Загрузка...</p>";
-        
+    let dataList = [];
+    
+    // VPNsiz ishlashi uchun Shikimori API ishlatamiz (bu bloklanmagan)
+    async function load() {
+        const listEl = document.getElementById('list');
         try {
-            const response = await fetch(API_URL);
-            const data = await response.json();
-            allAnime = data.list;
-            displayAnime(allAnime);
-        } catch (error) {
-            listContainer.innerHTML = "<p style='color:red; padding:20px;'>Ошибка: Не удалось загрузить данные.</p>";
+            const res = await fetch('https://shikimori.one/api/animes?limit=24&order=popularity&status=released');
+            const data = await res.json();
+            dataList = data;
+            render(dataList);
+        } catch(e) {
+            listEl.innerHTML = '<div style="color:red;text-align:center;width:100%;padding:50px;">Ошибка сети. Проверьте интернет и обновите страницу.</div>';
         }
     }
 
-    function displayAnime(list) {
-        const listContainer = document.getElementById('animeList');
-        listContainer.innerHTML = '';
-        
-        list.forEach(anime => {
-            const card = document.createElement('div');
-            card.className = 'anime-card';
-            card.innerHTML = `
-                <img src="https://www.anilibria.tv${anime.posters.medium.url}" alt="${anime.names.ru}">
-                <div class="info">
-                    <div class="title">${anime.names.ru}</div>
-                </div>
+    function render(arr) {
+        const list = document.getElementById('list');
+        list.innerHTML = '';
+        arr.forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            // Shikimori rasmlari uchun to'liq manzil
+            const imgUrl = 'https://shikimori.one' + a.image.preview;
+            div.innerHTML = `
+                <img src="${imgUrl}" alt="${a.russian}">
+                <div class="card-title">${a.russian || a.name}</div>
             `;
-            card.onclick = () => openPlayer(anime);
-            listContainer.appendChild(card);
+            div.onclick = () => {
+                document.getElementById('player').style.display = 'flex';
+                // Kodik universal pleeridan foydalanamiz
+                const title = encodeURIComponent(a.russian || a.name);
+                document.getElementById('v-cont').innerHTML = `<iframe src="https://kodik.info/find?title=${title}" allowfullscreen></iframe>`;
+            };
+            list.appendChild(div);
         });
     }
 
-    function openPlayer(anime) {
-        const modal = document.getElementById('videoModal');
-        const container = document.getElementById('videoContainer');
-        const title = document.getElementById('modalTitle');
-        
-        modal.style.display = 'flex';
-        title.innerText = anime.names.ru;
-        
-        const host = anime.player.host;
-        const episodes = Object.keys(anime.player.list);
-        const uuid = anime.player.list[episodes[0]].uuid;
-        
-        container.innerHTML = `<iframe src="https://${host}/public/embed.html?uuid=${uuid}" allowfullscreen></iframe>`;
+    function search() {
+        const val = document.getElementById('q').value.toLowerCase();
+        // Qidiruvni serverdan amalga oshirish (yaxshiroq natija uchun)
+        if (val.length > 2) {
+            fetch(`https://shikimori.one/api/animes?search=${val}&limit=20`)
+                .then(res => res.json())
+                .then(data => render(data));
+        } else if (val.length === 0) {
+            render(dataList);
+        }
     }
 
-    function closeVideo() {
-        document.getElementById('videoModal').style.display = 'none';
-        document.getElementById('videoContainer').innerHTML = '';
+    function closeP() { 
+        document.getElementById('player').style.display = 'none'; 
+        document.getElementById('v-cont').innerHTML = ''; 
     }
-
-    function searchAnime() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = allAnime.filter(a => 
-            a.names.ru.toLowerCase().includes(query) || 
-            (a.names.en && a.names.en.toLowerCase().includes(query))
-        );
-        displayAnime(filtered);
-        document.getElementById('gridTitle').innerText = query ? `Результаты поиска: ${query}` : "Последние обновления";
-    }
-
-    fetchAnime();
+    
+    load();
 </script>
 
 </body>
