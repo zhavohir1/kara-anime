@@ -4,49 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KARA ANIME</title>
-    
     <style>
         :root {
             --red: #ff0000;
             --bg: #050505;
-            --card-bg: #111111;
+            --card-bg: #0d0d0d;
             --text: #ffffff;
-            --glow: 0 0 15px rgba(255, 0, 0, 0.7);
-            --text-glow: 2px 2px 10px rgba(255, 0, 0, 0.9);
+            --glow: 0 0 15px rgba(255, 0, 0, 0.6);
+            --text-glow: 0 0 8px rgba(255, 0, 0, 1);
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             margin: 0; padding-bottom: 50px;
-            background-image: linear-gradient(rgba(0,0,0,0.93), rgba(0,0,0,0.93)), 
+            background-image: linear-gradient(rgba(0,0,0,0.95), rgba(0,0,0,0.95)), 
                               url('https://images8.alphacoders.com/841/841595.jpg');
             background-attachment: fixed; background-size: cover;
         }
 
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 6%; background: rgba(0, 0, 0, 0.98);
+            padding: 12px 6%; background: rgba(0, 0, 0, 0.98);
             border-bottom: 2px solid var(--red); position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
         .logo { 
-            font-size: 26px; font-weight: 900; letter-spacing: 5px; 
-            color: #fff; text-decoration: none; text-shadow: var(--text-glow);
+            font-size: 26px; font-weight: 900; letter-spacing: 5px; color: #fff; 
+            text-decoration: none; text-shadow: var(--text-glow);
         }
-        .logo span { color: var(--red); }
+        .logo span { color: var(--red); text-shadow: var(--text-glow); }
 
-        /* PROFIL RASMI — ENDI ANIQ CHIQADI */
         .profile {
-            display: flex; align-items: center; gap: 12px;
+            display: flex; align-items: center; gap: 10px;
             background: #000; padding: 5px 15px; border-radius: 30px;
             border: 2px solid var(--red); box-shadow: var(--glow);
         }
-        .profile span { font-size: 14px; font-weight: bold; text-shadow: var(--text-glow); }
+        .profile span { font-weight: bold; text-shadow: var(--text-glow); font-size: 14px; }
         .profile img { 
-            width: 35px; height: 35px; border-radius: 50%; 
+            width: 32px; height: 32px; border-radius: 50%; 
             object-fit: cover; border: 1px solid #fff;
         }
 
@@ -54,43 +52,38 @@
 
         .search-box {
             width: 100%; background: #0a0a0a; border: 1px solid #222;
-            padding: 15px 25px; border-radius: 12px; color: white;
-            outline: none; font-size: 16px; margin-bottom: 40px; box-sizing: border-box;
+            padding: 15px 20px; border-radius: 12px; color: white;
+            outline: none; margin-bottom: 30px; box-sizing: border-box;
+            transition: 0.3s;
         }
         .search-box:focus { border-color: var(--red); box-shadow: var(--glow); }
 
         .section-header { 
             font-size: 17px; text-transform: uppercase; letter-spacing: 3px;
-            margin: 45px 0 25px; display: flex; align-items: center; gap: 15px;
+            margin: 40px 0 20px; display: flex; align-items: center; gap: 10px;
             text-shadow: var(--text-glow);
         }
-        .section-header::before { content: ""; width: 5px; height: 22px; background: var(--red); box-shadow: var(--glow); }
+        .section-header::before { content: ""; width: 5px; height: 20px; background: var(--red); box-shadow: var(--glow); }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
 
         .card {
-            background: var(--card-bg); border-radius: 12px; overflow: hidden;
-            border: 1px solid #1a1a1a; transition: 0.4s; cursor: pointer; position: relative;
+            background: var(--card-bg); border-radius: 10px; overflow: hidden;
+            border: 1px solid #1a1a1a; transition: 0.3s; cursor: pointer; position: relative;
         }
-        .card:hover { border-color: var(--red); transform: translateY(-8px); box-shadow: var(--glow); }
-        .card img { width: 100%; height: 240px; object-fit: cover; opacity: 0.8; }
+        .card:hover { border-color: var(--red); transform: translateY(-5px); box-shadow: var(--glow); }
+        .card img { width: 100%; height: 220px; object-fit: cover; opacity: 0.8; }
         .card:hover img { opacity: 1; }
 
-        .badge {
-            position: absolute; top: 10px; left: 10px; background: var(--red);
-            color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: bold;
-        }
+        .info { padding: 10px; text-align: center; font-size: 12px; font-weight: 600; height: 35px; display: flex; align-items: center; justify-content: center; }
 
-        .info { padding: 12px; text-align: center; font-size: 13px; font-weight: 600; height: 38px; display: flex; align-items: center; justify-content: center; }
-
-        /* MODAL */
         #modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 2000; flex-direction: column;
         }
         .m-head { padding: 15px 6%; display: flex; justify-content: space-between; border-bottom: 2px solid var(--red); background: #050505; }
-        .close { color: var(--red); cursor: pointer; font-weight: bold; font-size: 16px; text-shadow: var(--text-glow); }
-        .p-body { flex-grow: 1; }
+        .close { color: var(--red); cursor: pointer; font-weight: bold; text-shadow: var(--text-glow); }
+        .p-body { flex-grow: 1; background: #000; }
         iframe { width: 100%; height: 100%; border: none; }
 
         @media (max-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; } }
@@ -102,20 +95,17 @@
     <a href="#" class="logo">KARA <span>ANIME</span></a>
     <div class="profile">
         <span>Zhavohir</span>
-        <img src="https://i.pinimg.com/736x/8a/06/6d/8a066d5498305c6d32c510e972605f6a.jpg" alt="P">
+        <img src="https://wallpapers.com/images/hd/gabimaru-the-hollow-70u9uue2z7scx36v.jpg" alt="P">
     </div>
 </header>
 
 <div class="container">
     <input type="text" class="search-box" id="s" placeholder="Поиск аниме..." onkeyup="search()">
-    
-    <div class="section-header">🔥 Популярные</div>
+    <div class="section-header">🔥 ПОПУЛЯРНЫЕ</div>
     <div class="grid" id="popular"></div>
-
-    <div class="section-header">🆕 Новинки</div>
+    <div class="section-header">🆕 НОВИНКИ</div>
     <div class="grid" id="new"></div>
-
-    <div class="section-header">🔞 Романтика и 18+</div>
+    <div class="section-header">🔞 РОМАНТИКА 18+</div>
     <div class="grid" id="r18"></div>
 </div>
 
@@ -130,7 +120,7 @@
             const res = await fetch(`https://shikimori.one/api/animes?${params}`);
             const data = await res.json();
             render(data, containerId);
-        } catch(e) { console.error("API Error"); }
+        } catch(e) { console.log("API Error"); }
     }
 
     function render(data, id) {
@@ -140,25 +130,17 @@
         data.forEach(a => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.innerHTML = `
-                <div class="badge">${a.episodes_aired || a.episodes || '?'} EP</div>
-                <img src="https://shikimori.one${a.image.preview}" alt="${a.russian}">
-                <div class="info">${a.russian || a.name}</div>
-            `;
-            // Pleerga faqat asosiy nomni yuboramiz
+            card.innerHTML = `<img src="https://shikimori.one${a.image.preview}"><div class="info">${a.russian || a.name}</div>`;
             card.onclick = () => play(a.russian || a.name);
             cont.appendChild(card);
         });
     }
 
     function play(name) {
-        // "Магическая битва 2" ni "Магическая битва" ga aylantirish (xatolikni yo'qotadi)
-        let cleanName = name.replace(/[0-9]/g, '').trim();
-        
         document.getElementById('modal').style.display = 'flex';
         document.getElementById('m-title').innerText = name;
-        // Eng barqaror qidiruv ssilkasi
-        document.getElementById('p-cont').innerHTML = `<iframe src="https://kodik.info/find?title=${encodeURIComponent(cleanName)}" allowfullscreen></iframe>`;
+        // Eng muhim qism: Kodik'ning find qidiruvi orqali pleerni yuklash
+        document.getElementById('p-cont').innerHTML = `<iframe src="https://kodik.info/find?title=${encodeURIComponent(name)}" allowfullscreen></iframe>`;
     }
 
     function closeM() {
@@ -172,10 +154,7 @@
             const res = await fetch(`https://shikimori.one/api/animes?search=${encodeURIComponent(q)}&limit=24`);
             const data = await res.json();
             render(data, 'new');
-            document.querySelectorAll('.section-header')[1].innerText = "Результаты поиска";
-        } else if (q.length === 0) {
-            init();
-        }
+        } else if (q.length === 0) init();
     }
 
     function init() {
@@ -183,9 +162,7 @@
         fetchAnimes('status=ongoing&order=popularity&limit=24', 'new');
         fetchAnimes('genre=22,4&limit=24&order=popularity', 'r18');
     }
-
     init();
 </script>
-
 </body>
 </html>
