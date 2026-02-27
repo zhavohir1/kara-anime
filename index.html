@@ -3,152 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA ANIME</title>
+    <title>KARA ANIME — Лучшие аниме онлайн</title>
+    
     <style>
         :root {
             --red: #ff0000;
             --bg: #050505;
-            --card-bg: #111;
-            /* Yozuvlar orqasidagi qizil nurlanish (YORQINROQ) */
-            --bright-glow: 0 0 15px #ff0000, 0 0 25px #ff0000;
-            --text-shadow: 2px 2px 10px #ff0000, 0 0 20px #ff0000;
+            --card-bg: #111111;
+            --text-color: #ffffff;
+            --neon-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.4);
+            --header-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
         }
 
         body {
             background-color: var(--bg);
-            color: #fff;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-color);
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding-bottom: 50px;
+            overflow-x: hidden;
         }
 
         /* HEADER */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 6%; background: #000;
+            padding: 15px 5%; background: rgba(0, 0, 0, 0.95);
             border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+            box-shadow: var(--header-shadow);
         }
 
         .logo { 
-            font-size: 28px; font-weight: 900; letter-spacing: 5px; 
+            font-size: 28px; font-weight: 900; letter-spacing: 4px; 
             color: #fff; text-decoration: none; 
-            text-shadow: var(--text-shadow); /* LOGO YORQIN */
+            text-shadow: 0 0 10px var(--red), 0 0 20px var(--red);
         }
         .logo span { color: var(--red); }
 
-        /* PROFIL RASMI - ISHONCHLI DARK RASM */
-        .profile {
+        .profile-box {
             display: flex; align-items: center; gap: 12px;
-            padding: 5px 15px; border-radius: 30px;
-            border: 2px solid var(--red); box-shadow: 0 0 15px var(--red);
+            background: #000; padding: 6px 15px; border-radius: 50px;
+            border: 2px solid var(--red); box-shadow: var(--neon-shadow);
         }
-        .profile span { font-weight: bold; text-shadow: var(--text-shadow); }
-        .profile img { 
-            width: 35px; height: 35px; border-radius: 50%; 
-            object-fit: cover; border: 1.5px solid #fff;
-        }
-
-        .container { padding: 30px 6%; }
-
-        .search-box {
-            width: 100%; background: #111; border: 2px solid #333;
-            padding: 15px 20px; border-radius: 12px; color: #fff;
-            outline: none; margin-bottom: 30px; font-size: 16px;
-        }
-        .search-box:focus { border-color: var(--red); box-shadow: 0 0 15px var(--red); }
-
-        .section-header { 
-            font-size: 20px; text-transform: uppercase; letter-spacing: 3px;
-            margin: 40px 0 20px; color: #fff;
-            text-shadow: var(--text-shadow); /* SARLAVHALAR YORQIN */
+        .profile-box span { font-weight: bold; font-size: 14px; text-shadow: 0 0 5px var(--red); }
+        .profile-box img { 
+            width: 36px; height: 36px; border-radius: 50%; 
+            border: 1px solid #fff; object-fit: cover;
         }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        .container { padding: 20px 5%; }
+
+        /* SEARCH */
+        .search-area {
+            width: 100%; background: #0f0f0f; border: 2px solid #222;
+            padding: 15px 25px; border-radius: 15px; color: #fff;
+            outline: none; font-size: 16px; margin-bottom: 40px;
+            transition: 0.3s; box-sizing: border-box;
+        }
+        .search-area:focus { border-color: var(--red); box-shadow: var(--neon-shadow); }
+
+        .section-title { 
+            font-size: 22px; text-transform: uppercase; letter-spacing: 2px;
+            margin: 40px 0 20px; display: flex; align-items: center; gap: 15px;
+            text-shadow: 0 0 10px var(--red);
+        }
+        .section-title::before { content: ""; width: 6px; height: 25px; background: var(--red); box-shadow: var(--neon-shadow); }
+
+        /* GRID */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 25px;
+        }
 
         .card {
-            background: var(--card-bg); border-radius: 10px; overflow: hidden;
-            border: 1px solid #222; transition: 0.3s; cursor: pointer;
+            background: var(--card-bg); border-radius: 15px; overflow: hidden;
+            border: 1px solid #1a1a1a; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; position: relative;
         }
-        .card:hover { border-color: var(--red); transform: scale(1.03); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
-        .card img { width: 100%; height: 230px; object-fit: cover; }
-        .card .info { padding: 10px; text-align: center; font-weight: bold; font-size: 13px; }
+        .card:hover { border-color: var(--red); transform: translateY(-10px); box-shadow: var(--neon-shadow); }
+        .card img { width: 100%; height: 250px; object-fit: cover; transition: 0.3s; }
+        
+        .card-info { 
+            padding: 12px; text-align: center; font-size: 14px; 
+            font-weight: 600; min-height: 40px; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(to top, #000, transparent);
+        }
 
-        /* PLEER MODAL */
-        #modal {
+        /* PLAYER MODAL */
+        #player-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 2000; flex-direction: column;
+            background: #000; z-index: 9999; flex-direction: column;
         }
-        .m-head { padding: 15px 6%; display: flex; justify-content: space-between; border-bottom: 2px solid var(--red); }
-        .close { color: var(--red); cursor: pointer; font-weight: bold; text-shadow: var(--text-shadow); }
-        iframe { width: 100%; height: 100%; border: none; }
+        .modal-nav { 
+            padding: 15px 5%; display: flex; justify-content: space-between; 
+            align-items: center; border-bottom: 2px solid var(--red); 
+        }
+        .close-btn { color: var(--red); cursor: pointer; font-weight: 900; font-size: 18px; text-shadow: 0 0 10px var(--red); }
+        .iframe-container { flex-grow: 1; position: relative; }
+        iframe { position: absolute; width: 100%; height: 100%; border: none; }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+            .logo { font-size: 22px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
     <a href="#" class="logo">KARA <span>ANIME</span></a>
-    <div class="profile">
+    <div class="profile-box">
         <span>Zhavohir</span>
-        <img src="https://images.cdn.shikimori.one/characters/x80/165518.jpg" alt="P">
+        <img src="https://wallpapers.com/images/hd/gabimaru-the-hollow-70u9uue2z7scx36v.jpg" alt="Avatar">
     </div>
 </header>
 
 <div class="container">
-    <input type="text" class="search-box" id="s" placeholder="Qidirish..." onkeyup="search()">
+    <input type="text" class="search-area" id="search-input" placeholder="Поиск аниме (например: Магическая битва)..." onkeyup="searchAnime()">
     
-    <div class="section-header">🔥 Mashhurlar</div>
+    <div class="section-title">⭐ Твои любимые (Эксклюзив)</div>
+    <div class="grid" id="favorites"></div>
+
+    <div class="section-title">🔥 Популярное сейчас</div>
     <div class="grid" id="popular"></div>
 
-    <div class="section-header">🆕 Yangilar</div>
-    <div class="grid" id="new"></div>
+    <div class="section-title">🎭 Фэнтези и Магия</div>
+    <div class="grid" id="fantasy"></div>
+
+    <div class="section-header section-title">💖 Романтика</div>
+    <div class="grid" id="romance"></div>
 </div>
 
-<div id="modal">
-    <div class="m-head"><div id="m-title" style="text-shadow: var(--text-shadow);"></div><div class="close" onclick="closeM()">[X] YOPISH</div></div>
-    <div style="flex-grow:1;"><div id="p-cont" style="height:100%;"></div></div>
+<div id="player-modal">
+    <div class="modal-nav">
+        <div id="anime-title" style="font-weight: bold; font-size: 18px;"></div>
+        <div class="close-btn" onclick="closePlayer()">ЗАКРЫТЬ [X]</div>
+    </div>
+    <div class="iframe-container" id="video-frame"></div>
 </div>
 
 <script>
-    const API = 'https://shikimori.one/api/animes';
-
-    async function load(params, id) {
-        const res = await fetch(`${API}?${params}`);
-        const data = await res.json();
-        const cont = document.getElementById(id);
-        cont.innerHTML = '';
-        data.forEach(a => {
-            const div = document.createElement('div');
-            div.className = 'card';
-            div.innerHTML = `<img src="https://shikimori.one${a.image.preview}"><div class="info">${a.russian || a.name}</div>`;
-            div.onclick = () => play(a.russian || a.name);
-            cont.appendChild(div);
-        });
+    // Maxsus tanlangan animelar IDlari (Shikimori ID)
+    const favIds = [41467, 52299, 52034, 33206, 50528, 40356]; // Solo leveling, Jujutsu, Oshi no Ko, etc.
+    
+    async function loadCategory(params, containerId) {
+        try {
+            const response = await fetch(`https://shikimori.one/api/animes?${params}`);
+            const data = await response.json();
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach(anime => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="https://shikimori.one${anime.image.preview}" alt="${anime.russian}">
+                    <div class="card-info">${anime.russian || anime.name}</div>
+                `;
+                card.onclick = () => openPlayer(anime.russian || anime.name);
+                container.appendChild(card);
+            });
+        } catch (error) { console.error("Ошибка загрузки"); }
     }
 
-    function play(title) {
-        document.getElementById('modal').style.display = 'flex';
-        document.getElementById('m-title').innerText = title;
-        // Eng ishonchli pleer qidiruvi
-        document.getElementById('p-cont').innerHTML = `<iframe src="https://kodik.info/find?title=${encodeURIComponent(title)}" allowfullscreen></iframe>`;
+    function openPlayer(title) {
+        const modal = document.getElementById('player-modal');
+        const frameContainer = document.getElementById('video-frame');
+        const titleDisplay = document.getElementById('anime-title');
+        
+        titleDisplay.innerText = title;
+        modal.style.display = 'flex';
+        
+        // VPN-siz ishlaydigan eng yaxshi pleer qidiruvi
+        frameContainer.innerHTML = `<iframe src="https://www.alloha.tv/video/search?q=${encodeURIComponent(title)}" allowfullscreen></iframe>`;
     }
 
-    function closeM() {
-        document.getElementById('modal').style.display = 'none';
-        document.getElementById('p-cont').innerHTML = '';
+    function closePlayer() {
+        document.getElementById('player-modal').style.display = 'none';
+        document.getElementById('video-frame').innerHTML = '';
     }
 
-    async function search() {
-        const q = document.getElementById('s').value;
-        if(q.length > 2) load(`search=${q}&limit=20`, 'new');
-        else if(q.length == 0) init();
+    async function searchAnime() {
+        const query = document.getElementById('search-input').value;
+        if(query.length > 2) {
+            loadCategory(`search=${encodeURIComponent(query)}&limit=24`, 'popular');
+            document.querySelectorAll('.section-title')[1].innerText = "Результаты поиска";
+        } else if (query.length === 0) {
+            init();
+            document.querySelectorAll('.section-title')[1].innerText = "🔥 Популярное сейчас";
+        }
     }
 
     function init() {
-        load('order=popularity&limit=20', 'popular');
-        load('status=ongoing&limit=20', 'new');
+        // Ma'lumotlarni yuklash (limit ko'paytirildi)
+        loadCategory(`ids=${favIds.join(',')}`, 'favorites');
+        loadCategory('order=popularity&limit=24', 'popular');
+        loadCategory('genre=10&limit=24', 'fantasy'); // 10 - Fantasy
+        loadCategory('genre=22&limit=24', 'romance'); // 22 - Romance
     }
+
     init();
 </script>
+
 </body>
 </html>
