@@ -8,84 +8,80 @@
         :root {
             --red: #ff0000;
             --bg: #050505;
-            --card-bg: #0d0d0d;
-            --text: #ffffff;
-            --glow: 0 0 15px rgba(255, 0, 0, 0.7);
-            --text-glow: 0 0 10px rgba(255, 0, 0, 1);
+            --card-bg: #111;
+            /* Yozuvlar orqasidagi qizil nurlanish (YORQINROQ) */
+            --bright-glow: 0 0 15px #ff0000, 0 0 25px #ff0000;
+            --text-shadow: 2px 2px 10px #ff0000, 0 0 20px #ff0000;
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0; padding-bottom: 50px;
-            background-image: linear-gradient(rgba(0,0,0,0.95), rgba(0,0,0,0.95)), 
-                              url('https://images8.alphacoders.com/841/841595.jpg');
-            background-attachment: fixed; background-size: cover;
+            color: #fff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
         }
 
+        /* HEADER */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 6%; background: rgba(0, 0, 0, 0.98);
-            border-bottom: 2px solid var(--red); position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            padding: 15px 6%; background: #000;
+            border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
         }
 
         .logo { 
-            font-size: 26px; font-weight: 900; letter-spacing: 5px; color: #fff; 
-            text-decoration: none; text-shadow: var(--text-glow);
+            font-size: 28px; font-weight: 900; letter-spacing: 5px; 
+            color: #fff; text-decoration: none; 
+            text-shadow: var(--text-shadow); /* LOGO YORQIN */
         }
         .logo span { color: var(--red); }
 
+        /* PROFIL RASMI - ISHONCHLI DARK RASM */
         .profile {
-            display: flex; align-items: center; gap: 10px;
-            background: #000; padding: 5px 15px; border-radius: 30px;
-            border: 2px solid var(--red); box-shadow: var(--glow);
+            display: flex; align-items: center; gap: 12px;
+            padding: 5px 15px; border-radius: 30px;
+            border: 2px solid var(--red); box-shadow: 0 0 15px var(--red);
         }
-        .profile span { font-weight: bold; text-shadow: var(--text-glow); font-size: 14px; }
+        .profile span { font-weight: bold; text-shadow: var(--text-shadow); }
         .profile img { 
             width: 35px; height: 35px; border-radius: 50%; 
-            object-fit: cover; border: 1px solid #fff;
+            object-fit: cover; border: 1.5px solid #fff;
         }
 
         .container { padding: 30px 6%; }
 
         .search-box {
-            width: 100%; background: #0a0a0a; border: 1px solid #222;
-            padding: 15px 20px; border-radius: 12px; color: white;
-            outline: none; margin-bottom: 30px; box-sizing: border-box;
+            width: 100%; background: #111; border: 2px solid #333;
+            padding: 15px 20px; border-radius: 12px; color: #fff;
+            outline: none; margin-bottom: 30px; font-size: 16px;
         }
-        .search-box:focus { border-color: var(--red); box-shadow: var(--glow); }
+        .search-box:focus { border-color: var(--red); box-shadow: 0 0 15px var(--red); }
 
         .section-header { 
-            font-size: 18px; text-transform: uppercase; letter-spacing: 3px;
-            margin: 40px 0 20px; display: flex; align-items: center; gap: 10px;
-            text-shadow: var(--text-glow);
+            font-size: 20px; text-transform: uppercase; letter-spacing: 3px;
+            margin: 40px 0 20px; color: #fff;
+            text-shadow: var(--text-shadow); /* SARLAVHALAR YORQIN */
         }
-        .section-header::before { content: ""; width: 6px; height: 22px; background: var(--red); box-shadow: var(--glow); }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
 
         .card {
             background: var(--card-bg); border-radius: 10px; overflow: hidden;
-            border: 1px solid #1a1a1a; transition: 0.3s; cursor: pointer;
+            border: 1px solid #222; transition: 0.3s; cursor: pointer;
         }
-        .card:hover { border-color: var(--red); transform: translateY(-5px); box-shadow: var(--glow); }
+        .card:hover { border-color: var(--red); transform: scale(1.03); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
         .card img { width: 100%; height: 230px; object-fit: cover; }
+        .card .info { padding: 10px; text-align: center; font-weight: bold; font-size: 13px; }
 
-        .info { padding: 10px; text-align: center; font-size: 13px; font-weight: 600; min-height: 40px; }
-
-        /* MODAL */
+        /* PLEER MODAL */
         #modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 2000; flex-direction: column;
         }
-        .m-head { padding: 15px 6%; display: flex; justify-content: space-between; border-bottom: 2px solid var(--red); background: #050505; }
-        .close { color: var(--red); cursor: pointer; font-weight: bold; text-shadow: var(--text-glow); }
-        .p-body { flex-grow: 1; position: relative; }
-        iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
+        .m-head { padding: 15px 6%; display: flex; justify-content: space-between; border-bottom: 2px solid var(--red); }
+        .close { color: var(--red); cursor: pointer; font-weight: bold; text-shadow: var(--text-shadow); }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
@@ -94,60 +90,47 @@
     <a href="#" class="logo">KARA <span>ANIME</span></a>
     <div class="profile">
         <span>Zhavohir</span>
-        <img src="https://i.pinimg.com/736x/8a/06/6d/8a066d5498305c6d32c510e972605f6a.jpg" alt="P">
+        <img src="https://images.cdn.shikimori.one/characters/x80/165518.jpg" alt="P">
     </div>
 </header>
 
 <div class="container">
-    <input type="text" class="search-box" id="s" placeholder="Поиск аниме..." onkeyup="search()">
+    <input type="text" class="search-box" id="s" placeholder="Qidirish..." onkeyup="search()">
     
-    <div class="section-header">🔥 ПОПУЛЯРНЫЕ</div>
+    <div class="section-header">🔥 Mashhurlar</div>
     <div class="grid" id="popular"></div>
 
-    <div class="section-header">🆕 НОВИНКИ</div>
+    <div class="section-header">🆕 Yangilar</div>
     <div class="grid" id="new"></div>
-
-    <div class="section-header">🔞 РОМАНТИКА 18+</div>
-    <div class="grid" id="r18"></div>
 </div>
 
 <div id="modal">
-    <div class="m-head">
-        <div id="m-title" style="font-weight: bold; text-shadow: var(--text-glow); color: #fff;"></div>
-        <div class="close" onclick="closeM()">ЗАКРЫТЬ [X]</div>
-    </div>
-    <div class="p-body" id="p-cont"></div>
+    <div class="m-head"><div id="m-title" style="text-shadow: var(--text-shadow);"></div><div class="close" onclick="closeM()">[X] YOPISH</div></div>
+    <div style="flex-grow:1;"><div id="p-cont" style="height:100%;"></div></div>
 </div>
 
 <script>
-    const SHIKI_URL = 'https://shikimori.one';
+    const API = 'https://shikimori.one/api/animes';
 
-    async function loadData(params, id) {
-        try {
-            const res = await fetch(`${SHIKI_URL}/api/animes?${params}`);
-            const data = await res.json();
-            const cont = document.getElementById(id);
-            cont.innerHTML = '';
-            data.forEach(a => {
-                const div = document.createElement('div');
-                div.className = 'card';
-                div.innerHTML = `<img src="${SHIKI_URL}${a.image.preview}"><div class="info">${a.russian || a.name}</div>`;
-                div.onclick = () => playAnime(a.russian || a.name);
-                cont.appendChild(div);
-            });
-        } catch (e) { console.error(e); }
+    async function load(params, id) {
+        const res = await fetch(`${API}?${params}`);
+        const data = await res.json();
+        const cont = document.getElementById(id);
+        cont.innerHTML = '';
+        data.forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `<img src="https://shikimori.one${a.image.preview}"><div class="info">${a.russian || a.name}</div>`;
+            div.onclick = () => play(a.russian || a.name);
+            cont.appendChild(div);
+        });
     }
 
-    function playAnime(title) {
-        // Eng xatosiz usul: To'g'ridan-to'g'ri qidiruv sahifasini iframe ichida ochish
-        const modal = document.getElementById('modal');
-        const pCont = document.getElementById('p-cont');
-        const mTitle = document.getElementById('m-title');
-        
-        modal.style.display = 'flex';
-        mTitle.innerText = title;
-        // Bu ssilka 100% ishlaydi, chunki u kodik qidiruv panelini ochib beradi
-        pCont.innerHTML = `<iframe src="https://kodik.info/search?title=${encodeURIComponent(title)}" allowfullscreen></iframe>`;
+    function play(title) {
+        document.getElementById('modal').style.display = 'flex';
+        document.getElementById('m-title').innerText = title;
+        // Eng ishonchli pleer qidiruvi
+        document.getElementById('p-cont').innerHTML = `<iframe src="https://kodik.info/find?title=${encodeURIComponent(title)}" allowfullscreen></iframe>`;
     }
 
     function closeM() {
@@ -157,17 +140,14 @@
 
     async function search() {
         const q = document.getElementById('s').value;
-        if(q.length > 2) {
-            loadData(`search=${encodeURIComponent(q)}&limit=24`, 'new');
-        } else if (q.length === 0) init();
+        if(q.length > 2) load(`search=${q}&limit=20`, 'new');
+        else if(q.length == 0) init();
     }
 
     function init() {
-        loadData('order=popularity&limit=24', 'popular');
-        loadData('status=ongoing&order=popularity&limit=24', 'new');
-        loadData('genre=22,4&limit=24&order=popularity', 'r18');
+        load('order=popularity&limit=20', 'popular');
+        load('status=ongoing&limit=20', 'new');
     }
-
     init();
 </script>
 </body>
