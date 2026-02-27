@@ -3,268 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA ANIME | Смотреть Аниме Онлайн</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-    
+    <title>KARA ANIME — Твой портал</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-red: #ff0000;
-            --dark-bg: #020202;
-            --card-bg: #0d0d0d;
-            --neon-glow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5);
+            --red: #ff0000;
+            --bg: #000000;
+            --neon: 0 0 15px #ff0000, 0 0 30px #ff0000;
             --text-neon: 0 0 10px #ff0000, 0 0 20px #ff0000;
         }
 
         body {
-            background: var(--dark-bg);
+            background: var(--bg);
             color: #fff;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            overflow-x: hidden;
+            padding-bottom: 50px;
         }
 
-        /* SHOV-SHUVLI HEADER */
+        /* HEADER */
         header {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--main-red);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(0,0,0,0.9);
+            border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 0 20px rgba(255,0,0,0.5);
         }
 
         .logo {
             font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 5px;
-            text-decoration: none;
-            color: #fff;
-            text-shadow: var(--text-neon);
+            font-size: 28px; font-weight: 900; letter-spacing: 5px;
+            color: #fff; text-decoration: none; text-shadow: var(--text-neon);
+        }
+        .logo span { color: var(--red); }
+
+        .profile {
+            display: flex; align-items: center; gap: 10px;
+            border: 2px solid var(--red); padding: 5px 15px; border-radius: 30px;
+            box-shadow: var(--neon); background: #000;
+        }
+        .profile img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #fff; }
+
+        .container { padding: 20px 5%; }
+
+        .search-bar {
+            width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #222;
+            background: #111; color: #fff; font-size: 16px; outline: none; margin-bottom: 30px;
+        }
+        .search-bar:focus { border-color: var(--red); box-shadow: var(--neon); }
+
+        .title {
+            font-size: 22px; margin: 40px 0 20px; text-transform: uppercase;
+            text-shadow: var(--text-neon); border-left: 5px solid var(--red); padding-left: 15px;
         }
 
-        .logo span { color: var(--main-red); }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 5px 15px;
-            border-radius: 50px;
-            border: 2px solid var(--main-red);
-            background: #000;
-            box-shadow: var(--neon-glow);
+        /* GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        .card {
+            background: #0a0a0a; border-radius: 12px; overflow: hidden;
+            border: 1px solid #1a1a1a; transition: 0.3s; cursor: pointer;
         }
+        .card:hover { transform: scale(1.05); border-color: var(--red); box-shadow: var(--neon); }
+        .card img { width: 100%; height: 230px; object-fit: cover; }
+        .card p { padding: 10px; text-align: center; font-weight: bold; font-size: 13px; margin: 0; }
 
-        .user-profile span {
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 14px;
-            text-shadow: 0 0 5px #ff0000;
-        }
-
-        .user-profile img {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            object-fit: cover;
-        }
-
-        /* POISK */
-        .search-section { padding: 30px 5% 0; }
-        .search-input {
-            width: 100%;
-            background: #111;
-            border: 2px solid #333;
-            padding: 15px 25px;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-            transition: 0.3s;
-        }
-        .search-input:focus {
-            border-color: var(--main-red);
-            box-shadow: var(--neon-glow);
-        }
-
-        /* SECTIONS */
-        .content { padding: 0 5% 50px; }
-        .category-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-            margin: 40px 0 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: var(--text-neon);
-            border-left: 5px solid var(--main-red);
-            padding-left: 15px;
-        }
-
-        .anime-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 25px;
-        }
-
-        .anime-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: 0.4s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .anime-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--main-red);
-            box-shadow: var(--neon-glow);
-        }
-
-        .anime-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .anime-card .title {
-            padding: 12px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 14px;
-            background: rgba(0,0,0,0.8);
-        }
-
-        /* FULLSCREEN MODAL PLAYER */
+        /* MODAL */
         #player-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            z-index: 2000;
-            flex-direction: column;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 2000; flex-direction: column;
         }
-
-        .modal-header {
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #050505;
-            border-bottom: 2px solid var(--main-red);
-        }
-
-        .close-btn {
-            color: var(--main-red);
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            text-shadow: var(--text-neon);
-        }
-
-        .video-wrapper { flex-grow: 1; }
+        .m-header { padding: 15px; display: flex; justify-content: space-between; border-bottom: 2px solid var(--red); }
+        .close { color: var(--red); font-weight: bold; cursor: pointer; text-shadow: var(--text-neon); }
+        .video-box { flex-grow: 1; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        @media (max-width: 600px) {
-            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-            .logo { font-size: 24px; }
-        }
+        @media (max-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#" class="logo">KARA<span>ANIME</span></a>
-    <div class="user-profile">
-        <span>Zhavohir</span>
+    <a href="#" class="logo">KARA <span>ANIME</span></a>
+    <div class="profile">
+        <span style="text-shadow: 0 0 5px red;">Zhavohir</span>
         <img src="https://i.pinimg.com/736x/8a/06/6d/8a066d5498305c6d32c510e972605f6a.jpg" alt="P">
     </div>
 </header>
 
-<div class="search-section">
-    <input type="text" class="search-input" id="search" placeholder="Поиск аниме (например: Токийский гуль)..." onkeyup="search()">
-</div>
+<div class="container">
+    <input type="text" class="search-bar" id="search" placeholder="Поиск аниме (например: Токийский гуль)..." onkeyup="search()">
+    
+    <div class="title">🔥 ЛЕГЕНДАРНЫЕ</div>
+    <div class="grid" id="favs"></div>
 
-<div class="content">
-    <div class="category-title">⭐ Эксклюзив (Твой топ)</div>
-    <div class="anime-grid" id="exclusive"></div>
+    <div class="title">✨ МАГИЯ И ФЭНТЕЗИ</div>
+    <div class="grid" id="fantasy"></div>
 
-    <div class="category-title">🔥 Популярное фэнтези</div>
-    <div class="anime-grid" id="popular"></div>
-
-    <div class="category-title">💖 Романтика</div>
-    <div class="anime-grid" id="romance"></div>
+    <div class="title">💖 РОМАНТИКА</div>
+    <div class="grid" id="romance"></div>
 </div>
 
 <div id="player-modal">
-    <div class="modal-header">
-        <div id="player-title" style="font-weight: bold; text-shadow: var(--text-neon);"></div>
-        <div class="close-btn" onclick="closePlayer()">ЗАКРЫТЬ [X]</div>
+    <div class="m-header">
+        <div id="m-title" style="text-shadow: var(--text-neon); font-weight: bold;"></div>
+        <div class="close" onclick="closeM()">ЗАКРЫТЬ [X]</div>
     </div>
-    <div class="video-wrapper" id="player-container"></div>
+    <div class="video-box" id="p-box"></div>
 </div>
 
 <script>
-    // Maxsus tanlangan animelar
-    const myFavs = [617, 52299, 51019, 37451, 14813, 50528, 41467]; 
+    const SHIKI = 'https://shikimori.one/api/animes';
 
-    async function fetchAnime(params, containerId) {
-        try {
-            const res = await fetch(`https://shikimori.one/api/animes?${params}`);
-            const data = await res.json();
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            data.forEach(anime => {
-                const card = document.createElement('div');
-                card.className = 'anime-card';
-                card.innerHTML = `
-                    <img src="https://shikimori.one${anime.image.preview}">
-                    <div class="title">${anime.russian || anime.name}</div>
-                `;
-                card.onclick = () => openPlayer(anime.russian || anime.name);
-                container.appendChild(card);
-            });
-        } catch (e) { console.log("Ошибка API"); }
+    // Sen aytgan asosiy animelar
+    const favIds = "617,52299,51019,37451,14813,32281,40591"; 
+
+    async function load(params, id) {
+        const res = await fetch(`${SHIKI}?${params}`);
+        const data = await res.json();
+        const box = document.getElementById(id);
+        box.innerHTML = '';
+        data.forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `<img src="https://shikimori.one${a.image.preview}"><p>${a.russian || a.name}</p>`;
+            div.onclick = () => openM(a.russian || a.name);
+            box.appendChild(div);
+        });
     }
 
-    function openPlayer(name) {
-        const modal = document.getElementById('player-modal');
-        const container = document.getElementById('player-container');
-        document.getElementById('player-title').innerText = name;
-        modal.style.display = 'flex';
+    function openM(title) {
+        document.getElementById('player-modal').style.display = 'flex';
+        document.getElementById('m-title').innerText = title;
+        // 100% ISHLAYDIGAN USUL: Agar qidiruv natija topmasa, foydalanuvchi tanlashi uchun "find" ishlatamiz
+        document.getElementById('p-box').innerHTML = `<iframe src="https://vidsrc.me/embed/anime?search=${encodeURIComponent(title)}" allowfullscreen></iframe>`;
         
-        // ENG KUCHLI PLEER: Alloha API qidiruvi (Hammasini qidirib topadi)
-        container.innerHTML = `<iframe src="https://www.alloha.tv/video/search?q=${encodeURIComponent(name)}" allowfullscreen></iframe>`;
+        // Agar bu ham ishlamasa, Kodikning maxsus qidiruv sahifasini ochamiz
+        setTimeout(() => {
+            if (document.getElementById('p-box').innerHTML === "") {
+                document.getElementById('p-box').innerHTML = `<iframe src="https://kodik.info/search?title=${encodeURIComponent(title)}" allowfullscreen></iframe>`;
+            }
+        }, 1000);
     }
 
-    function closePlayer() {
+    function closeM() {
         document.getElementById('player-modal').style.display = 'none';
-        document.getElementById('player-container').innerHTML = '';
+        document.getElementById('p-box').innerHTML = '';
     }
 
     function search() {
         const q = document.getElementById('search').value;
-        if(q.length > 2) {
-            fetchAnime(`search=${encodeURIComponent(q)}&limit=24`, 'popular');
-            document.querySelectorAll('.category-title')[1].innerText = "Результаты поиска";
-        } else if (q.length === 0) {
-            init();
-        }
+        if(q.length > 2) load(`search=${q}&limit=20`, 'fantasy');
+        else if(q.length == 0) init();
     }
 
     function init() {
-        fetchAnime(`ids=${myFavs.join(',')}`, 'exclusive');
-        fetchAnime('order=popularity&genre=10&limit=24', 'popular'); // Fantasy
-        fetchAnime('order=popularity&genre=22&limit=24', 'romance'); // Romance
+        load(`ids=${favIds}`, 'favs');
+        load('order=popularity&genre=10&limit=20', 'fantasy');
+        load('order=popularity&genre=22&limit=20', 'romance');
     }
-
     init();
 </script>
 </body>
