@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA — Смотреть Аниме Онлайн</title>
+    <title>KARA — Премиум Аниме Портал</title>
     <style>
         :root {
             --red: #ff0000;
@@ -21,6 +21,7 @@
             padding-bottom: 50px;
         }
 
+        /* Шапка сайта */
         header {
             display: flex;
             justify-content: space-between;
@@ -49,6 +50,7 @@
             margin-right: 5px;
         }
 
+        /* Поиск */
         .search-box {
             background: #1a1a1a;
             border-radius: 20px;
@@ -69,12 +71,13 @@
             font-size: 14px;
         }
 
+        /* Стильный Аниме Профиль */
         .profile-container {
             display: flex;
             align-items: center;
             gap: 12px;
-            background: #111;
-            padding: 5px 15px;
+            background: linear-gradient(45deg, #111, #222);
+            padding: 6px 15px;
             border-radius: 30px;
             border: 1px solid #333;
             cursor: pointer;
@@ -83,11 +86,13 @@
 
         .profile-container:hover {
             border-color: var(--red);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
 
+        /* Аниме Аватар */
         .profile-container img {
-            width: 32px;
-            height: 32px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             border: 2px solid var(--red);
             object-fit: cover;
@@ -98,6 +103,7 @@
             font-weight: 600;
         }
 
+        /* Основной контент */
         .main-content {
             padding: 20px 5%;
         }
@@ -111,6 +117,7 @@
             color: var(--text-main);
         }
 
+        /* Сетка Аниме */
         .anime-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -124,6 +131,7 @@
             transition: 0.4s;
             cursor: pointer;
             border: 1px solid #1a1a1a;
+            position: relative;
         }
 
         .anime-card:hover {
@@ -231,6 +239,7 @@
 </div>
 
 <script>
+    // Server bilan bog'lanish yaxshilandi
     const API_URL = 'https://api.anilibria.tv/v3/title/updates?limit=30&filter=id,names,posters,player';
     let allAnime = [];
 
