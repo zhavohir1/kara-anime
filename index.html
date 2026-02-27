@@ -91,4 +91,214 @@
             width: 35px;
             height: 35px;
             border-radius: 50%;
-            border
+            border: 2px solid var(--red);
+            object-fit: cover;
+        }
+
+        .profile-info b {
+            display: block;
+            font-size: 14px;
+        }
+
+        /* Konteyner */
+        .main-content {
+            padding: 20px 5%;
+        }
+
+        h2 {
+            font-size: 18px;
+            text-transform: uppercase;
+            border-left: 4px solid var(--red);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            color: var(--text-dim);
+        }
+
+        /* Grid tizimi */
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .anime-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.4s;
+            cursor: pointer;
+            border: 1px solid #1a1a1a;
+            position: relative;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--red);
+        }
+
+        .anime-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .anime-card .info {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .anime-card .title {
+            font-size: 13px;
+            font-weight: 600;
+            height: 34px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Video Modal */
+        #videoModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .close-btn {
+            color: var(--red);
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .video-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        iframe {
+            width: 90%;
+            height: 80%;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .search-box { display: none; }
+            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            iframe { width: 100%; height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" class="logo"><span>|</span>KARA</a>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Anime qidirish..." onkeyup="searchAnime()">
+    </div>
+
+    <div class="profile-container" onclick="alert('Profil sozlamalari yaqinda ishga tushadi!')">
+        <div class="profile-info">
+            <b>Zhavohir</b>
+        </div>
+        <img src="https://i.pinimg.com/736x/01/7c/44/017c44c9797092bc93da3d3873468533.jpg" alt="Admin">
+    </div>
+</header>
+
+<div id="videoModal">
+    <div class="modal-header">
+        <span class="close-btn" onclick="closeVideo()">YOPISH ×</span>
+    </div>
+    <div class="video-wrapper" id="videoContainer"></div>
+</div>
+
+<div class="main-content">
+    <h2 id="gridTitle">So'nggi yangilanishlar</h2>
+    <div class="anime-grid" id="animeList">
+        </div>
+</div>
+
+<script>
+    const API_URL = 'https://api.anilibria.tv/v3/title/updates?limit=30&filter=id,names,posters,player';
+    let allAnime = [];
+
+    async function fetchAnime() {
+        const listContainer = document.getElementById('animeList');
+        listContainer.innerHTML = "<p>Yuklanmoqda...</p>";
+        
+        try {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            allAnime = data.list;
+            displayAnime(allAnime);
+        } catch (error) {
+            listContainer.innerHTML = "<p style='color:red'>Xatolik: Server bilan bog'lanish uzildi.</p>";
+        }
+    }
+
+    function displayAnime(list) {
+        const listContainer = document.getElementById('animeList');
+        listContainer.innerHTML = '';
+        
+        list.forEach(anime => {
+            const card = document.createElement('div');
+            card.className = 'anime-card';
+            card.innerHTML = `
+                <img src="https://www.anilibria.tv${anime.posters.medium.url}" alt="${anime.names.ru}">
+                <div class="info">
+                    <div class="title">${anime.names.ru}</div>
+                </div>
+            `;
+            card.onclick = () => openPlayer(anime);
+            listContainer.appendChild(card);
+        });
+    }
+
+    function openPlayer(anime) {
+        const modal = document.getElementById('videoModal');
+        const container = document.getElementById('videoContainer');
+        modal.style.display = 'flex';
+        
+        // Bu yerda universal pleer ssilkasini yasaymiz
+        const host = anime.player.host;
+        const episodes = Object.keys(anime.player.list);
+        const uuid = anime.player.list[episodes[0]].uuid;
+        
+        // Pleer ichida ovozlarni tanlash Kodik orqali bo'ladi (avtomatik)
+        container.innerHTML = `<iframe src="https://${host}/public/embed.html?uuid=${uuid}" allowfullscreen></iframe>`;
+    }
+
+    function closeVideo() {
+        document.getElementById('videoModal').style.display = 'none';
+        document.getElementById('videoContainer').innerHTML = '';
+    }
+
+    function searchAnime() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = allAnime.filter(a => 
+            a.names.ru.toLowerCase().includes(query) || 
+            (a.names.en && a.names.en.toLowerCase().includes(query))
+        );
+        displayAnime(filtered);
+        document.getElementById('gridTitle').innerText = query ? `Qidiruv natijasi: ${query}` : "So'nggi yangilanishlar";
+    }
+
+    // Sahifa yuklanganda ishga tushadi
+    fetchAnime();
+</script>
+
+</body>
+</html>
