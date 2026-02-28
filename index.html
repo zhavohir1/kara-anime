@@ -3,198 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA MULTIMEDIA | Anime • Кино • Дорамы</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Exo+2:wght@400;800&display=swap" rel="stylesheet">
+    <title>KARA ANIME - Смотреть Онлайн</title>
     <style>
-        :root {
-            --red: #ff0000;
-            --neon: 0 0 20px #ff0000, 0 0 40px rgba(255, 0, 0, 0.5);
-            --bg: #050505;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        /* DIZAYN: SODDA, TEZ VA KUCHLI */
         body {
-            background: var(--bg);
+            background: #000;
             color: #fff;
-            font-family: 'Exo 2', sans-serif;
-            background-image: radial-gradient(circle at center, #1a0000 0%, #000 100%);
-            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        /* HEADER */
         header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: rgba(0,0,0,0.9);
-            border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 1000;
-            backdrop-filter: blur(15px); box-shadow: var(--neon);
+            background: #111;
+            padding: 15px 20px;
+            border-bottom: 2px solid #ff0000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255,0,0,0.5);
         }
 
         .logo {
-            font-family: 'Orbitron', sans-serif; font-size: 28px; font-weight: 900;
-            letter-spacing: 5px; color: #fff; text-decoration: none;
-            text-shadow: 0 0 10px var(--red);
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
         }
-        .logo span { color: var(--red); }
+        .logo span { color: #ff0000; }
 
-        /* NAVIGATION BUTTONS */
-        .nav-tabs {
-            display: flex; justify-content: center; gap: 15px; padding: 20px 5%;
-            overflow-x: auto;
-        }
-        .tab-btn {
-            background: #111; border: 1px solid #333; color: #aaa;
-            padding: 10px 25px; border-radius: 30px; cursor: pointer;
-            font-weight: bold; transition: 0.4s; white-space: nowrap;
-        }
-        .tab-btn.active {
-            border-color: var(--red); color: #fff; box-shadow: var(--neon);
-            background: rgba(255,0,0,0.1);
+        .search-section {
+            padding: 20px;
+            text-align: center;
         }
 
-        /* SEARCH */
-        .search-container { padding: 10px 5% 30px; text-align: center; }
-        .main-search {
-            width: 100%; max-width: 700px; padding: 18px 25px;
-            border-radius: 50px; border: 2px solid #222;
-            background: #000; color: #fff; font-size: 16px;
-            outline: none; transition: 0.3s;
-        }
-        .main-search:focus { border-color: var(--red); box-shadow: var(--neon); }
-
-        /* CONTENT GRID */
-        .content { padding: 0 5% 100px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 25px; }
-        
-        .card {
-            background: #0d0d0d; border-radius: 15px; overflow: hidden;
-            border: 1px solid #1a1a1a; transition: 0.5s; cursor: pointer;
-            position: relative;
-        }
-        .card:hover { transform: translateY(-10px); border-color: var(--red); box-shadow: var(--neon); }
-        .card img { width: 100%; height: 250px; object-fit: cover; }
-        .card-info { padding: 15px; text-align: center; font-size: 14px; font-weight: bold; }
-        .card-type { 
-            position: absolute; top: 10px; right: 10px; background: var(--red);
-            padding: 3px 10px; border-radius: 5px; font-size: 10px; font-weight: 900;
+        #search-input {
+            width: 80%;
+            max-width: 500px;
+            padding: 12px;
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 5px;
+            outline: none;
         }
 
-        /* FULLSCREEN PLAYER */
+        #search-input:focus { border-color: #ff0000; }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .anime-card {
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid #222;
+        }
+
+        .anime-card:hover { border-color: #ff0000; transform: scale(1.03); }
+
+        .anime-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .anime-card .title {
+            padding: 10px;
+            font-size: 13px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* PLEER MODAL (ENG MUHIM QISM) */
         #player-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; flex-direction: column;
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            flex-direction: column;
         }
-        .m-head { padding: 20px; display: flex; justify-content: space-between; border-bottom: 2px solid var(--red); }
-        .p-box { flex-grow: 1; }
-        iframe { width: 100%; height: 100%; border: none; }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
+        .modal-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            background: #111;
+            border-bottom: 1px solid #ff0000;
+        }
+
+        .close-btn { color: #ff0000; cursor: pointer; font-weight: bold; font-size: 20px; }
+
+        .video-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 600px) {
+            .container { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#" class="logo">KARA<span>PRO</span></a>
-    <div style="display: flex; align-items: center; gap: 10px;">
-        <span style="font-size: 12px; font-weight: 900; color: var(--red);">KZ ONLINE</span>
-        <img src="https://i.pinimg.com/736x/88/ef/37/88ef37240c345371f307c088f6110901.jpg" style="width:35px; border-radius:50%; border:1px solid #fff;">
-    </div>
+    <a href="/" class="logo">KARA<span>ANIME</span></a>
+    <img src="https://i.pinimg.com/736x/88/ef/37/88ef37240c345371f307c088f6110901.jpg" width="35" style="border-radius:50%">
 </header>
 
-<div class="nav-tabs">
-    <button class="tab-btn active" onclick="changeMode('anime')">АНИМЕ</button>
-    <button class="tab-btn" onclick="changeMode('movie')">КИНО</button>
-    <button class="tab-btn" onclick="changeMode('dorama')">ДОРАМЫ</button>
+<div class="search-section">
+    <input type="text" id="search-input" placeholder="Введите название аниме или фильма..." onkeyup="if(event.key === 'Enter') search()">
 </div>
 
-<div class="search-container">
-    <input type="text" id="search" class="main-search" placeholder="Поиск по всему миру..." onkeyup="doSearch()">
-</div>
-
-<div class="content">
-    <div id="display-title" style="font-family:'Orbitron'; margin-bottom: 20px; color: var(--red); letter-spacing: 2px;">ПОПУЛЯРНОЕ</div>
-    <div class="grid" id="main-grid"></div>
-</div>
+<div class="container" id="anime-list">
+    </div>
 
 <div id="player-modal">
-    <div class="m-head">
-        <div id="p-title" style="font-weight: bold; color: var(--red);"></div>
-        <div onclick="closePlayer()" style="cursor: pointer; font-weight: 900;">[X] ЗАКРЫТЬ</div>
+    <div class="modal-header">
+        <div id="anime-name" style="font-weight: bold;"></div>
+        <div class="close-btn" onclick="closePlayer()">[ X ]</div>
     </div>
-    <div class="p-box" id="p-frame"></div>
+    <div class="video-container" id="video-box">
+        </div>
 </div>
 
 <script>
-    let currentMode = 'anime';
-    const SHIKI = 'https://shikimori.one/api/animes';
+    // 1. ASOSIY BAZA (Shikimori API - Bu hech qachon xato bermaydi)
+    const API_URL = 'https://shikimori.one/api/animes';
 
-    // Bu funksiya animelarni yuklaydi
-    async function loadAnime(params) {
-        const r = await fetch(`${SHIKI}?${params}`);
-        const data = await r.json();
-        render(data, 'ANIME');
+    async function loadAnimes(params = 'order=popularity&limit=24') {
+        try {
+            const response = await fetch(`${API_URL}?${params}`);
+            const data = await response.json();
+            displayAnimes(data);
+        } catch (error) {
+            console.error("Xato yuz berdi:", error);
+        }
     }
 
-    // Bu funksiya Kino va Doramalarni TMDB (yoki o'rniga qidiruv orqali) ko'rsatadi
-    // Hozircha asosiy interfeysni anime orqali to'ldiramiz, lekin pleer hamma narsani topadi
-    function render(list, type) {
-        const grid = document.getElementById('main-grid');
-        grid.innerHTML = '';
-        list.forEach(item => {
+    function displayAnimes(animes) {
+        const list = document.getElementById('anime-list');
+        list.innerHTML = '';
+        animes.forEach(anime => {
             const card = document.createElement('div');
-            card.className = 'card';
+            card.className = 'anime-card';
             card.innerHTML = `
-                <div class="card-type">${type}</div>
-                <img src="${item.image ? 'https://shikimori.one' + item.image.preview : 'https://via.placeholder.com/200x300'}">
-                <div class="card-info">${item.russian || item.name}</div>
+                <img src="https://shikimori.one${anime.image.preview}" alt="${anime.name}">
+                <div class="title">${anime.russian || anime.name}</div>
             `;
-            card.onclick = () => openPlayer(item.russian || item.name);
-            grid.appendChild(card);
+            card.onclick = () => openPlayer(anime.russian || anime.name);
+            list.appendChild(card);
         });
     }
 
-    function openPlayer(title) {
+    // 2. PLEERNI OCHISH (Kodik Portal - Eng ishonchli usul)
+    function openPlayer(name) {
         document.getElementById('player-modal').style.display = 'flex';
-        document.getElementById('p-title').innerText = title.toUpperCase();
-        const q = encodeURIComponent(title);
-        // UNIVERSAL PLEER: Kino, Dorama va Animeni hammasini topadi!
-        document.getElementById('p-frame').innerHTML = `<iframe src="https://base.karatun.com/search?title=${q}" allowfullscreen></iframe>`;
-    }
-
-    function closePlayer() {
-        document.getElementById('player-modal').style.display = 'none';
-        document.getElementById('p-frame').innerHTML = '';
-    }
-
-    function changeMode(mode) {
-        currentMode = mode;
-        const btns = document.querySelectorAll('.tab-btn');
-        btns.forEach(b => b.classList.toggle('active', b.innerText.toLowerCase().includes(mode.substring(0,3))));
+        document.getElementById('anime-name').innerText = name;
         
-        if(mode === 'anime') {
-            loadAnime('order=popularity&limit=24');
-        } else {
-            // Kino va Dorama uchun ham anime bazasidan namuna olamiz, 
-            // lekin qidiruvda istalgan kinoni yozsangiz chiqadi!
-            loadAnime('order=random&limit=24');
-            document.getElementById('display-title').innerText = mode.toUpperCase() + " (ПОИСК)";
-        }
-    }
-
-    function doSearch() {
-        const q = document.getElementById('search').value;
-        if(q.length > 2) {
-            loadAnime(`search=${q}&limit=24`);
-        }
+        const videoBox = document.getElementById('video-box');
+        const query = encodeURIComponent(name);
+        
+        /* DIQQAT: Biz "base.karatun.com" o'rniga to'g'ridan-to'g'ri 
+           Kodik qidiruv tizimini ishlatamiz. Bu Qozog'istonda eng yaxshi ishlaydigani.
+        */
+        videoBox.innerHTML = `<iframe src="https://kodik.info/search?title=${query}&types=anime-serial,anime,movie,serial&strict=false" allowfullscreen></iframe>`;
     }
 
     function closePlayer() {
         document.getElementById('player-modal').style.display = 'none';
-        document.getElementById('p-frame').innerHTML = '';
+        document.getElementById('video-box').innerHTML = '';
     }
 
-    // Start
-    loadAnime('order=popularity&limit=24');
+    function search() {
+        const query = document.getElementById('search-input').value;
+        if (query.length > 2) {
+            loadAnimes(`search=${encodeURIComponent(query)}&limit=24`);
+        }
+    }
+
+    // Birinchi marta yuklash
+    loadAnimes();
 </script>
+
 </body>
 </html>
