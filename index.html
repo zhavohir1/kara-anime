@@ -4,196 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KARA ANIME</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-:root {
---red:#ff0000;
---dark-bg:#0b0b0b;
---card-bg:#161616;
---shadow:0 0 20px rgba(255,0,0,0.4);
-}
-
-body{
-background:var(--dark-bg);
-color:#eee;
-font-family:'Roboto',sans-serif;
-margin:0;
-}
-
-header{
-background:#000;
-border-bottom:3px solid var(--red);
-padding:15px 5%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{
-font-family:'Orbitron',sans-serif;
-font-size:26px;
-color:white;
-text-decoration:none;
-}
-
-.logo span{color:red;}
-
-.content{padding:20px 5%;}
-
-.section-title{
-font-size:22px;
-font-weight:bold;
-margin-bottom:20px;
-border-left:5px solid red;
-padding-left:15px;
-}
-
-.anime-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-gap:25px;
-}
-
-.anime-card{
-background:var(--card-bg);
-border-radius:10px;
-overflow:hidden;
-cursor:pointer;
-transition:.3s;
-}
-
-.anime-card:hover{
-transform:translateY(-10px);
-box-shadow:var(--shadow);
-}
-
-.anime-card img{
-width:100%;
-height:260px;
-object-fit:cover;
-}
-
-.anime-card .info{
-padding:10px;
-text-align:center;
-font-weight:bold;
-}
-
-#player-modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-z-index:2000;
-flex-direction:column;
-}
-
-.player-header{
-padding:15px;
-display:flex;
-justify-content:space-between;
-background:#111;
-}
-
-.close-btn{
-font-size:24px;
-cursor:pointer;
-color:red;
-}
-
-.video-wrapper{
-flex:1;
-}
-
-iframe{
-width:100%;
-height:100%;
-border:none;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <header>
-<a class="logo">KARA<span>ANIME</span></a>
+<div class="logo">KARA<span>ANIME</span></div>
+<input type="text" id="search" placeholder="Поиск аниме...">
 </header>
 
-<div class="content">
-<div class="section-title">Top Anime</div>
-<div class="anime-grid" id="anime-list"></div>
-</div>
+<section class="container">
+<h2>Популярные аниме</h2>
+<div id="anime-grid" class="grid"></div>
+</section>
 
-<div id="player-modal">
-<div class="player-header">
-<div id="active-title"></div>
-<div class="close-btn" onclick="closePlayer()">×</div>
-</div>
-<div class="video-wrapper" id="video-box"></div>
-</div>
-
-<script>
-const API = "https://shikimori.one/api/animes";
-
-async function fetchAnimes(query="order=popularity&limit=30"){
-try{
-const res = await fetch(`${API}?${query}`);
-const data = await res.json();
-renderAnimes(data);
-}catch(e){
-console.log("API error", e);
-}
-}
-
-function renderAnimes(animes){
-const grid=document.getElementById("anime-list");
-grid.innerHTML="";
-
-animes.forEach(anime=>{
-const title = anime.name; // MUHIM OZGARTIRILDI
-
-const image = anime.image?.original 
-? "https://shikimori.one"+anime.image.original
-: "https://via.placeholder.com/300x400";
-
-const card=document.createElement("div");
-card.className="anime-card";
-
-card.innerHTML=`
-<img src="${image}">
-<div class="info">${anime.russian || anime.name}</div>
-`;
-
-card.onclick=()=>openPlayer(title);
-
-grid.appendChild(card);
-});
-}
-
-function openPlayer(title){
-document.getElementById("player-modal").style.display="flex";
-document.getElementById("active-title").innerText=title;
-
-const videoBox=document.getElementById("video-box");
-
-const encoded=encodeURIComponent(title);
-
-videoBox.innerHTML=
-`<iframe src="https://kodik.info/search?title=${encoded}&types=anime-serial,anime"></iframe>`;
-}
-
-function closePlayer(){
-document.getElementById("player-modal").style.display="none";
-document.getElementById("video-box").innerHTML="";
-}
-
-fetchAnimes();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
