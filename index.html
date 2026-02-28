@@ -3,187 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARA ANIME - Смотреть Онлайн</title>
+    <title>KARA ANIME - Смотреть аниме как на Jut.su</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* DIZAYN: SODDA, TEZ VA KUCHLI */
-        body {
-            background: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+        :root {
+            --red: #ff0000;
+            --dark-bg: #0b0b0b;
+            --card-bg: #161616;
+            --shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
+        body {
+            background-color: var(--dark-bg);
+            color: #eee;
+            font-family: 'Roboto', sans-serif;
+            margin: 0; padding: 0;
+        }
+
+        /* JUT.SU STYLE HEADER */
         header {
-            background: #111;
-            padding: 15px 20px;
-            border-bottom: 2px solid #ff0000;
+            background: #000;
+            border-bottom: 3px solid var(--red);
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 0 15px rgba(255,0,0,0.5);
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: var(--shadow);
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
             color: #fff;
             text-decoration: none;
+            letter-spacing: 3px;
+        }
+        .logo span { color: var(--red); }
+
+        /* SEARCH BAR */
+        .search-container {
+            padding: 20px 5%;
+            background: linear-gradient(to bottom, #111, var(--dark-bg));
+        }
+        .search-bar {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 15px 25px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-bar input:focus {
+            border-color: var(--red);
+            box-shadow: var(--shadow);
+        }
+
+        /* GRID SYSTEM */
+        .content { padding: 20px 5%; }
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--red);
+            padding-left: 15px;
             text-transform: uppercase;
         }
-        .logo span { color: #ff0000; }
 
-        .search-section {
-            padding: 20px;
-            text-align: center;
-        }
-
-        #search-input {
-            width: 80%;
-            max-width: 500px;
-            padding: 12px;
-            background: #222;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        #search-input:focus { border-color: #ff0000; }
-
-        .container {
-            padding: 20px;
+        .anime-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
         }
 
         .anime-card {
-            background: #111;
-            border-radius: 8px;
+            background: var(--card-bg);
+            border-radius: 10px;
             overflow: hidden;
-            cursor: pointer;
             transition: 0.3s;
+            cursor: pointer;
             border: 1px solid #222;
+            position: relative;
         }
-
-        .anime-card:hover { border-color: #ff0000; transform: scale(1.03); }
-
+        .anime-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--red);
+            box-shadow: var(--shadow);
+        }
         .anime-card img {
             width: 100%;
-            height: 220px;
+            height: 260px;
             object-fit: cover;
         }
-
-        .anime-card .title {
-            padding: 10px;
-            font-size: 13px;
+        .anime-card .info {
+            padding: 12px;
             text-align: center;
             font-weight: bold;
+            font-size: 14px;
+            background: rgba(0,0,0,0.8);
         }
 
-        /* PLEER MODAL (ENG MUHIM QISM) */
+        /* JUT.SU PLAYER INTERFACE */
         #player-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
+            background: #000;
+            z-index: 2000;
             flex-direction: column;
         }
-
-        .modal-header {
-            padding: 15px;
+        .player-header {
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             background: #111;
-            border-bottom: 1px solid #ff0000;
+            border-bottom: 2px solid var(--red);
+        }
+        .close-btn {
+            color: var(--red);
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
-        .close-btn { color: #ff0000; cursor: pointer; font-weight: bold; font-size: 20px; }
-
-        .video-container {
+        .video-wrapper {
             flex-grow: 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #000;
         }
-
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
+        /* MOBILE OPTIMIZATION */
         @media (max-width: 600px) {
-            .container { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .logo { font-size: 20px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="/" class="logo">KARA<span>ANIME</span></a>
-    <img src="https://i.pinimg.com/736x/88/ef/37/88ef37240c345371f307c088f6110901.jpg" width="35" style="border-radius:50%">
+    <a href="#" class="logo">KARA<span>ANIME</span></a>
+    <img src="https://i.pinimg.com/736x/88/ef/37/88ef37240c345371f307c088f6110901.jpg" width="40" height="40" style="border-radius: 50%; border: 2px solid var(--red);">
 </header>
 
-<div class="search-section">
-    <input type="text" id="search-input" placeholder="Введите название аниме или фильма..." onkeyup="if(event.key === 'Enter') search()">
+<div class="search-container">
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Поиск аниме как на Jut.su..." onkeyup="handleSearch(event)">
+    </div>
 </div>
 
-<div class="container" id="anime-list">
-    </div>
+<div class="content">
+    <div class="section-title">Последние обновления</div>
+    <div class="anime-grid" id="anime-list">
+        </div>
+</div>
 
 <div id="player-modal">
-    <div class="modal-header">
-        <div id="anime-name" style="font-weight: bold;"></div>
-        <div class="close-btn" onclick="closePlayer()">[ X ]</div>
+    <div class="player-header">
+        <div id="active-title" style="font-weight: bold; font-size: 18px;">Название аниме</div>
+        <div class="close-btn" onclick="closePlayer()">×</div>
     </div>
-    <div class="video-container" id="video-box">
+    <div class="video-wrapper" id="video-box">
         </div>
 </div>
 
 <script>
-    // 1. ASOSIY BAZA (Shikimori API - Bu hech qachon xato bermaydi)
-    const API_URL = 'https://shikimori.one/api/animes';
+    const SHIKIMORI_API = 'https://shikimori.one/api/animes';
 
-    async function loadAnimes(params = 'order=popularity&limit=24') {
+    // 1. Ma'lumotlarni yuklash (Jut.su kabi tartibda)
+    async function fetchAnimes(query = 'order=popularity&limit=30') {
         try {
-            const response = await fetch(`${API_URL}?${params}`);
+            const response = await fetch(`${SHIKIMORI_API}?${query}`);
             const data = await response.json();
-            displayAnimes(data);
-        } catch (error) {
-            console.error("Xato yuz berdi:", error);
+            renderAnimes(data);
+        } catch (e) {
+            console.log("Xato!");
         }
     }
 
-    function displayAnimes(animes) {
-        const list = document.getElementById('anime-list');
-        list.innerHTML = '';
+    function renderAnimes(animes) {
+        const grid = document.getElementById('anime-list');
+        grid.innerHTML = '';
         animes.forEach(anime => {
             const card = document.createElement('div');
             card.className = 'anime-card';
             card.innerHTML = `
-                <img src="https://shikimori.one${anime.image.preview}" alt="${anime.name}">
-                <div class="title">${anime.russian || anime.name}</div>
+                <img src="https://shikimori.one${anime.image.original}" alt="${anime.name}">
+                <div class="info">${anime.russian || anime.name}</div>
             `;
             card.onclick = () => openPlayer(anime.russian || anime.name);
-            list.appendChild(card);
+            grid.appendChild(card);
         });
     }
 
-    // 2. PLEERNI OCHISH (Kodik Portal - Eng ishonchli usul)
-    function openPlayer(name) {
+    // 2. Jut.su kabi Pleer tizimi
+    function openPlayer(title) {
         document.getElementById('player-modal').style.display = 'flex';
-        document.getElementById('anime-name').innerText = name;
+        document.getElementById('active-title').innerText = title;
         
         const videoBox = document.getElementById('video-box');
-        const query = encodeURIComponent(name);
+        const encodedTitle = encodeURIComponent(title);
         
-        /* DIQQAT: Biz "base.karatun.com" o'rniga to'g'ridan-to'g'ri 
-           Kodik qidiruv tizimini ishlatamiz. Bu Qozog'istonda eng yaxshi ishlaydigani.
-        */
-        videoBox.innerHTML = `<iframe src="https://kodik.info/search?title=${query}&types=anime-serial,anime,movie,serial&strict=false" allowfullscreen></iframe>`;
+        // QOZOG'ISTONDA ENG YAXSHI ISHLAYDIGAN JUT.SU ALTERNATIVI
+        // Bu manba avtomatik ravishda seriyalarni Jut.su kabi ro'yxat qilib beradi
+        videoBox.innerHTML = `<iframe src="https://kodik.info/search?title=${encodedTitle}&types=anime-serial,anime&strict=false" allowfullscreen></iframe>`;
     }
 
     function closePlayer() {
@@ -191,15 +229,18 @@
         document.getElementById('video-box').innerHTML = '';
     }
 
-    function search() {
-        const query = document.getElementById('search-input').value;
-        if (query.length > 2) {
-            loadAnimes(`search=${encodeURIComponent(query)}&limit=24`);
+    // 3. Qidiruv
+    function handleSearch(e) {
+        const val = e.target.value;
+        if(val.length > 2) {
+            fetchAnimes(`search=${encodeURIComponent(val)}&limit=30`);
+        } else if(val.length === 0) {
+            fetchAnimes();
         }
     }
 
-    // Birinchi marta yuklash
-    loadAnimes();
+    // Dastlabki ishga tushirish
+    fetchAnimes();
 </script>
 
 </body>
