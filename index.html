@@ -1,23 +1,57 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KARA ANIME</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+<script>
+const API = "https://shikimori.one/api/animes";
 
-<header>
-<div class="logo">KARA<span>ANIME</span></div>
-<input type="text" id="search" placeholder="Поиск аниме...">
-</header>
+async function loadAnime(search="order=popularity&limit=30"){
+const res = await fetch(`${API}?${search}`);
+const data = await res.json();
 
-<section class="container">
-<h2>Популярные аниме</h2>
-<div id="anime-grid" class="grid"></div>
-</section>
+const grid = document.getElementById("anime-list");
+grid.innerHTML = "";
 
-<script src="script.js"></script>
-</body>
-</html>
+data.forEach(anime=>{
+const card = document.createElement("div");
+card.className="anime-card";
+
+const title = anime.name;
+
+card.innerHTML = `
+<img src="https://shikimori.one${anime.image.original}">
+<div class="info">${anime.russian || anime.name}</div>
+`;
+
+card.onclick=()=>{
+openPlayer(title);
+};
+
+grid.appendChild(card);
+});
+}
+
+function openPlayer(title){
+document.getElementById("player-modal").style.display="flex";
+document.getElementById("active-title").innerText=title;
+
+const videoBox=document.getElementById("video-box");
+
+const encoded=encodeURIComponent(title);
+
+videoBox.innerHTML=
+`<iframe src="https://aniqit.com/anime?search=${encoded}" allowfullscreen></iframe>`;
+}
+
+function closePlayer(){
+document.getElementById("player-modal").style.display="none";
+document.getElementById("video-box").innerHTML="";
+}
+
+function handleSearch(e){
+const val=e.target.value;
+if(val.length>2){
+loadAnime(`search=${val}`);
+}else if(val.length===0){
+loadAnime();
+}
+}
+
+loadAnime();
+</script>
